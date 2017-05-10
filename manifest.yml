@@ -3,4 +3,4 @@ applications:
 - name: quorum-node-1
   buildpack: binary_buildpack
   health-check-type: process
-  start: ./start.sh
+  command: ./start.sh
