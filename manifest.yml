@@ -2,5 +2,5 @@
 applications:
 - name: quorum-node-1
   buildpack: binary_buildpack
-  start: bash -c "exit 99"
   health-check-type: process
+  start: ./7node/start.sh
