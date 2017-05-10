@@ -12,6 +12,7 @@ pushd $SRC_DIR
   make all
 popd
 
+mkdir $OUTPUT_DIR/bin
 cp $SRC_DIR/build/bin/geth \
   $OUTPUT_DIR/bin/geth
 cp $SRC_DIR/build/bin/bootnode \
