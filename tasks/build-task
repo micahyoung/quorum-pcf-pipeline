@@ -9,7 +9,7 @@ PIPELINE_DIR=${PIPELINE_DIR:?"!"}
 OUTPUT_DIR=${OUTPUT_DIR:?"!"}
 
 pushd $SRC_DIR
-  make geth
+  make all
 popd
 
 cp $SRC_DIR/build/bin/geth \
