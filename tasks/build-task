@@ -13,7 +13,8 @@ pushd $QUORUM_SRC_DIR
   make all
 popd
 
-sudo apt-get install haskell-stack
+apt-get install haskell-stack
+stack setup
 pushd $CONSTELLATION_SRC_DIR
   stack install
 popd
