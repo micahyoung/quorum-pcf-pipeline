@@ -1,0 +1,35 @@
+groups:
+- name: quorum-deploy
+  jobs:
+  - quorum-build-and-deploy
+resources:
+- name: quorum-git
+  type: git
+  source:
+    branch: master
+    uri: https://github.com/jpmorganchase/quorum.git
+- name: quorum-pipeline-git
+  type: git
+  source:
+    branch: master
+    uri: {{pipeline_repo_url}}
+- name: my-app-cf-resource
+  type: cf
+  source:
+    api: {{cf_api_url}}
+    username: {{cf_username}}
+    password: {{cf_password}}
+    organization: {{cf_org}}
+    space: {{cf_space}}
+    skip_cert_check: true
+jobs:
+- name: quorum-build-and-deploy
+  serial: true
+  plan:
+  - get: quorum-git
+    #trigger: true
+  - task: build
+    file: build-task.yml
+  - put: my-app-cf-resource
+    params:
+      manifest: build-output/manifest.yml
