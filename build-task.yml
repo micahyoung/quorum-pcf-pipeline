@@ -8,10 +8,11 @@ config:
       tag: 1.7-wheezy
   inputs:
     - name: quorum-git
+    - name: quorum-pipeline-git
   outputs:
     - name: build-output
   run:
-    path: build-task.sh
+    path: quorum-pipeline-git/build-task.sh
   params:
     SRC_DIR: quorum-git
     OUTPUT_DIR: build-output

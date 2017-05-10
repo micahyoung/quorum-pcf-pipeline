@@ -29,7 +29,7 @@ jobs:
   - get: quorum-git
     #trigger: true
   - task: build
-    file: build-task.yml
+    file: quorum-pipeline-git/build-task.yml
   - put: my-app-cf-resource
     params:
       manifest: build-output/manifest.yml
