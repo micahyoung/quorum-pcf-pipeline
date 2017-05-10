@@ -1,0 +1,5 @@
+---
+applications:
+- name: quorum-node-1
+  buildpack: binary_buildpack
+  start: ./geth

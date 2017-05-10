@@ -13,7 +13,7 @@ resources:
   source:
     branch: master
     uri: {{pipeline_repo_url}}
-- name: my-app-cf-resource
+- name: cf-push
   type: cf
   source:
     api: {{cf_api_url}}
@@ -24,13 +24,12 @@ resources:
     skip_cert_check: true
 jobs:
 - name: quorum-build-and-deploy
-  serial: true
   plan:
   - get: quorum-git
     #trigger: true
   - get: quorum-pipeline-git
   - task: build
     file: quorum-pipeline-git/tasks/build-task.yml
-  - put: my-app-cf-resource
+  - put: cf-push
     params:
       manifest: build-output/manifest.yml
