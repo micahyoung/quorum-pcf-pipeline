@@ -8,6 +8,11 @@ resources:
   source:
     branch: master
     uri: https://github.com/jpmorganchase/quorum.git
+- name: constellation-git
+  type: git
+  source:
+    branch: master
+    uri: https://github.com/jpmorganchase/constellation.git
 - name: quorum-examples-git
   type: git
   source:
@@ -30,10 +35,12 @@ resources:
 jobs:
 - name: quorum-build-and-deploy
   plan:
-  - get: quorum-git
-    #trigger: true
-  - get: quorum-pipeline-git
-  - get: quorum-examples-git
+  - aggregate:
+    - get: quorum-git
+      #trigger: true
+    - get: constellation-git
+    - get: quorum-pipeline-git
+    - get: quorum-examples-git
   - task: build
     file: quorum-pipeline-git/tasks/build-task.yml
   - put: cf-push

@@ -3,7 +3,8 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-SRC_DIR=${SRC_DIR:?"!"}
+QUORUM_SRC_DIR=${QUORUM_SRC_DIR:?"!"}
+CONSTELLATION_SRC_DIR=${CONSTELLATION_SRC_DIR:?"!"}
 EXAMPLES_DIR=${EXAMPLES_DIR:?"!"}
 PIPELINE_DIR=${PIPELINE_DIR:?"!"}
 OUTPUT_DIR=${OUTPUT_DIR:?"!"}
