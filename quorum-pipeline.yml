@@ -39,3 +39,4 @@ jobs:
   - put: cf-push
     params:
       manifest: build-output/manifest.yml
+      path: build-output/

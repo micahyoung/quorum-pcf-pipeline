@@ -17,6 +17,8 @@ cp $SRC_DIR/build/bin/geth \
   $OUTPUT_DIR/bin/geth
 cp $SRC_DIR/build/bin/bootnode \
   $OUTPUT_DIR/bin/bootnode
+cp $SRC_DIR/build/bin/constellation-node \
+  $OUTPUT_DIR/bin/constellation-node
 
 pushd $OUTPUT_DIR
   export PATH=$PATH:`pwd`/bin
@@ -29,5 +31,7 @@ popd
 cp -r $EXAMPLES_DIR/examples/7nodes/* \
   $OUTPUT_DIR/
 
+cp $PIPELINE_DIR/min-start.sh \
+  $OUTPUT_DIR/min-start.sh
 cp $PIPELINE_DIR/manifest.yml \
   $OUTPUT_DIR/manifest.yml
