@@ -2,4 +2,4 @@
 applications:
 - name: quorum-node-1
   buildpack: binary_buildpack
-  start: ./geth
+  start: bash -c "cd 7nodes && ./init.sh && ./start.sh"
