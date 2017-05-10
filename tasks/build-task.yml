@@ -12,6 +12,7 @@ outputs:
   - name: build-output
 params:
   SRC_DIR: quorum-git
+  PIPELINE_DIR: quorum-pipeline-git
   OUTPUT_DIR: build-output
 run:
   path: quorum-pipeline-git/tasks/build-task.sh
