@@ -12,11 +12,15 @@ pushd $SRC_DIR
   make all
 popd
 
+pushd $EXAMPLES_DIR/examples/7nodes/
+  ./init.sh
+popd
+
 cp $SRC_DIR/build/bin/geth \
   $OUTPUT_DIR/geth
 cp $SRC_DIR/build/bin/bootnode \
   $OUTPUT_DIR/bootnode
 cp $PIPELINE_DIR/manifest.yml \
   $OUTPUT_DIR/manifest.yml
-cp -r $EXAMPLES_DIR/examples/7nodes \
-  $OUTPUT_DIR/7nodes
+cp -r $EXAMPLES_DIR/examples/7nodes/* \
+  $OUTPUT_DIR/
