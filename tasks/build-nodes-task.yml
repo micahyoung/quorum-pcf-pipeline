@@ -19,4 +19,4 @@ params:
   PIPELINE_DIR: quorum-pipeline-git
   OUTPUT_DIR: build-nodes-output
 run:
-  path: quorum-pipeline-git/tasks/build-constellation-task
+  path: quorum-pipeline-git/tasks/build-nodes-task

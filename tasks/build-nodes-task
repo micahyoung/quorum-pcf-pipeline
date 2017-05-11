@@ -4,18 +4,18 @@ set -o nounset
 set -o pipefail
 
 QUORUM_OUTPUT_DIR=${QUORUM_OUTPUT_DIR:?"!"}
-CONSTELLATION_DIR=${CONSTELLATION_URL:?"!"}
+CONSTELLATION_OUTPUT_DIR=${CONSTELLATION_OUTPUT_DIR:?"!"}
 EXAMPLES_DIR=${EXAMPLES_DIR:?"!"}
 PIPELINE_DIR=${PIPELINE_DIR:?"!"}
 OUTPUT_DIR=${OUTPUT_DIR:?"!"}
 
 mkdir $OUTPUT_DIR/bin
 
-cp $QUORUM_OUTPUT_DIR/build/bin/geth \
+cp $QUORUM_OUTPUT_DIR/geth \
   $OUTPUT_DIR/bin/geth
-cp $QUORUM_OUTPUT_DIR/build/bin/bootnode \
+cp $QUORUM_OUTPUT_DIR/bootnode \
   $OUTPUT_DIR/bin/bootnode
-cp $CONSTELLATION_OUTPUT_DIR/build/bin/constellation-node \
+cp $CONSTELLATION_OUTPUT_DIR/constellation-node \
   $OUTPUT_DIR/bin/constellation-node
 cp $PIPELINE_DIR/min-start.sh \
   $OUTPUT_DIR/min-start.sh
