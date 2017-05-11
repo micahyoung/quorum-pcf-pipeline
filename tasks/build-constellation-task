@@ -6,6 +6,8 @@ set -o pipefail
 CONSTELLATION_SRC_DIR=${CONSTELLATION_SRC_DIR:?"!"}
 OUTPUT_DIR=${OUTPUT_DIR:?"!"}
 
+apt-get install libdb-dev libsodium-dev zlib1g-dev libtinfo-dev
+
 pushd $CONSTELLATION_SRC_DIR
   stack install
 popd
