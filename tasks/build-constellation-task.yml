@@ -6,16 +6,12 @@ image_resource:
     repository: golang
     tag: 1.7-wheezy
 inputs:
-  - name: quorum-git
-  - name: quorum-examples-git
+  - name: constellation-git
   - name: quorum-pipeline-git
 outputs:
-  - name: build-output
+  - name: build-constellation-output
 params:
-  QUORUM_SRC_DIR: quorum-git
   CONSTELLATION_SRC_DIR: constellation-git
-  EXAMPLES_DIR: quorum-examples-git
-  PIPELINE_DIR: quorum-pipeline-git
   OUTPUT_DIR: build-output
 run:
-  path: quorum-pipeline-git/tasks/build-task
+  path: quorum-pipeline-git/tasks/build-constellation-task

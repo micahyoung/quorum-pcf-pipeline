@@ -1,0 +1,22 @@
+---
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: golang
+    tag: 1.7-wheezy
+inputs:
+  - name: build-quorum-output
+  - name: build-constellation-output
+  - name: quorum-examples-git
+  - name: quorum-pipeline-git
+outputs:
+  - name: build-nodes-output
+params:
+  QUORUM_OUTPUT_DIR: build-quorum-output
+  CONSTELLATION_OUTPUT_DIR: build-constellation-output
+  EXAMPLES_DIR: quorum-examples-git
+  PIPELINE_DIR: quorum-pipeline-git
+  OUTPUT_DIR: build-nodes-output
+run:
+  path: quorum-pipeline-git/tasks/build-constellation-task

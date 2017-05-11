@@ -1,0 +1,16 @@
+#!/bin/bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
+QUORUM_SRC_DIR=${QUORUM_SRC_DIR:?"!"}
+OUTPUT_DIR=${OUTPUT_DIR:?"!"}
+
+pushd $QUORUM_SRC_DIR
+  make all
+popd
+
+cp $QUORUM_SRC_DIR/build/bin/geth \
+  $OUTPUT_DIR/geth
+cp $QUORUM_SRC_DIR/build/bin/bootnode \
+  $OUTPUT_DIR/bootnode

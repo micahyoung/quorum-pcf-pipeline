@@ -1,0 +1,35 @@
+#!/bin/bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
+QUORUM_OUTPUT_DIR=${QUORUM_OUTPUT_DIR:?"!"}
+CONSTELLATION_OUTPUT_DIR=${CONSTELLATION_OUTPUT_DIR:?"!"}
+EXAMPLES_DIR=${EXAMPLES_DIR:?"!"}
+PIPELINE_DIR=${PIPELINE_DIR:?"!"}
+OUTPUT_DIR=${OUTPUT_DIR:?"!"}
+
+mkdir $OUTPUT_DIR/bin
+
+cp $QUORUM_OUTPUT_DIR/build/bin/geth \
+  $OUTPUT_DIR/bin/geth
+cp $QUORUM_OUTPUT_DIR/build/bin/bootnode \
+  $OUTPUT_DIR/bin/bootnode
+cp $CONSTELLATION_OUTPUT_DIR/build/bin/constellation-node \
+  $OUTPUT_DIR/bin/constellation-node
+cp $PIPELINE_DIR/min-start.sh \
+  $OUTPUT_DIR/min-start.sh
+cp $PIPELINE_DIR/manifest.yml \
+  $OUTPUT_DIR/manifest.yml
+
+pushd $OUTPUT_DIR
+  export PATH=$PATH:`pwd`/bin
+popd
+
+pushd $EXAMPLES_DIR/examples/7nodes/
+  ./init.sh
+popd
+
+cp -r $EXAMPLES_DIR/examples/7nodes/* \
+  $OUTPUT_DIR/
+

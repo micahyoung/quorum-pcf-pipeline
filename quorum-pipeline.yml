@@ -41,8 +41,13 @@ jobs:
     - get: constellation-git
     - get: quorum-pipeline-git
     - get: quorum-examples-git
-  - task: build
-    file: quorum-pipeline-git/tasks/build-task.yml
+  - aggregate:
+    - task: build-quorum
+      file: quorum-pipeline-git/tasks/build-quorum-task.yml
+    - task: build-constellation
+      file: quorum-pipeline-git/tasks/build-constellation-task.yml
+  - task: build-nodes
+    file: quorum-pipeline-git/tasks/build-nodes-task.yml
   - put: cf-push
     params:
       manifest: build-output/manifest.yml

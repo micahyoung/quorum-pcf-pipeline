@@ -1,0 +1,7 @@
+---
+applications:
+- name: quorum-node-1
+  buildpack: binary_buildpack
+  health-check-type: process
+  memory: 4GB
+  command: PATH=$PATH:bin/ ./min-start.sh

@@ -1,0 +1,16 @@
+#!/bin/bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
+CONSTELLATION_SRC_DIR=${CONSTELLATION_SRC_DIR:?"!"}
+OUTPUT_DIR=${OUTPUT_DIR:?"!"}
+
+apt-get install haskell-stack
+stack setup
+pushd $CONSTELLATION_SRC_DIR
+  stack install
+popd
+
+cp $QUORUM_SRC_DIR/build/bin/constellation-node \
+  $OUTPUT_DIR/constellation-node
