@@ -45,5 +45,5 @@ jobs:
   - aggregate:
     - put: cf-push
       params:
-        manifest: build-output/manifest.yml
-        path: build-output/
+        manifest: build-nodes-output/manifest.yml
+        path: build-nodes-output/
