@@ -32,9 +32,9 @@ jobs:
   plan:
   - aggregate:
     - get: quorum-git
-      #trigger: true
-    - get: quorum-pipeline-git
+      trigger: true
     - get: quorum-examples-git
+    - get: quorum-pipeline-git
   - aggregate:
     - task: build-quorum
       file: quorum-pipeline-git/tasks/build-quorum-task.yml
