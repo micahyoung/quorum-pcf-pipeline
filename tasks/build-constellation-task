@@ -5,12 +5,21 @@ set -o pipefail
 
 CONSTELLATION_SRC_DIR=${CONSTELLATION_SRC_DIR:?"!"}
 OUTPUT_DIR=${OUTPUT_DIR:?"!"}
+CACHE_INPUT=${CACHE_INPUT:?"!"}
+CACHE_OUTPUT=${CACHE_OUTPUT:?"!"}
 
+mv $CACHE_INPUT/stack-root $CACHE_OUTPUT/
+
+export STACK_ROOT=`pwd`/$CACHE_OUTPUT/stack-root
+stack setup
+
+apt-get update
 apt-get install libdb-dev libsodium-dev zlib1g-dev libtinfo-dev
 
 pushd $CONSTELLATION_SRC_DIR
-  stack install
+  stack install --allow-different-user
 popd
 
 cp $QUORUM_SRC_DIR/build/bin/constellation-node \
   $OUTPUT_DIR/constellation-node
+

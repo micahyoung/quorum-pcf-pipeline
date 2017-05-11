@@ -1,0 +1,17 @@
+---
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: debian
+    tag: wheezy-slim
+inputs:
+  - name: tasks
+  - name: cache-input
+outputs:
+  - name: cache-output
+params:
+  CACHE_INPUT: cache-input
+  CACHE_OUTPUT: cache-output
+run:
+  path: tasks/tasks/cache-task

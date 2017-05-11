@@ -23,6 +23,12 @@ resources:
   source:
     branch: master
     uri: {{pipeline_repo_url}}
+- name: cache
+  type: git
+  source:
+    branch: cache
+    uri: {{state_repo_url}}
+    private_key: !!binary {{state_repo_private_key}}
 - name: cf-push
   type: cf
   source:
@@ -41,14 +47,21 @@ jobs:
     - get: constellation-git
     - get: quorum-pipeline-git
     - get: quorum-examples-git
+    - get: cache
+  - task: cache-prep
+    file: quorum-pipeline-git/tasks/cache-task.yml
+    input_mapping: { cache-input: cache, cache-output: cache }
   - aggregate:
     - task: build-quorum
       file: quorum-pipeline-git/tasks/build-quorum-task.yml
     - task: build-constellation
       file: quorum-pipeline-git/tasks/build-constellation-task.yml
+      input_mapping: { cache-input: cache, cache-output: cache }
   - task: build-nodes
     file: quorum-pipeline-git/tasks/build-nodes-task.yml
-  - put: cf-push
-    params:
-      manifest: build-output/manifest.yml
-      path: build-output/
+  - aggregate:
+    - put: cf-push
+      params:
+        manifest: build-output/manifest.yml
+        path: build-output/
+    - put: cache
