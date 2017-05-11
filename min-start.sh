@@ -7,6 +7,8 @@ BOOTNODE_ENODE=enode://61077a284f5ba7607ab04f33cfde2750d659ad9af962516e159cf6ce7
 
 GLOBAL_ARGS="--bootnodes $BOOTNODE_ENODE --networkid $NETID --rpc --rpcaddr 0.0.0.0 --rpcapi admin,db,eth,debug,miner,net,shh,txpool,personal,web3,quorum"
 
+mkdir -p qdata/logs #MIN
+
 echo "[*] Starting Constellation nodes"
 nohup constellation-node tm1.conf 2>> qdata/logs/constellation1.log &
 sleep 1
@@ -42,9 +44,6 @@ PRIVATE_CONFIG=tm1.conf nohup geth --datadir qdata/dd1 $GLOBAL_ARGS --rpcport 22
 #MIN 
 #MIN echo "[*] Starting node 7"
 #MIN PRIVATE_CONFIG=tm7.conf nohup geth --datadir qdata/dd7 $GLOBAL_ARGS --rpcport 22006 --port 21006 2>>qdata/logs/7.log &
-
-sleep 2
-tail -f qdata/logs/*.log
 
 echo "[*] Waiting for nodes to start"
 sleep 10
