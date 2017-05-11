@@ -8,13 +8,9 @@ image_resource:
 inputs:
   - name: constellation-git
   - name: quorum-pipeline-git
-  - name: cache-input
 outputs:
   - name: build-constellation-output
-  - name: cache-output
 params:
-  CACHE_INPUT: cache-input
-  CACHE_OUTPUT: cache-output
   CONSTELLATION_SRC_DIR: constellation-git
   OUTPUT_DIR: build-constellation-output
 run:

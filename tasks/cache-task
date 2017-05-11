@@ -1,9 +1,0 @@
-#!/bin/bash
-set -o errexit
-set -o nounset
-set -o pipefail
-
-CACHE_INPUT=${CACHE_INPUT:?"!"}
-CACHE_OUTPUT=${CACHE_OUTPUT:?"!"}
-
-cp -r $CACHE_INPUT/* $CACHE_OUTPUT/
