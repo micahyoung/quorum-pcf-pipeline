@@ -3,15 +3,13 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: haskell
-    tag: '8'
+    repository: debian
+    tag: wheezy-slim
 inputs:
-  - name: constellation-git
   - name: quorum-pipeline-git
 outputs:
   - name: build-constellation-output
 params:
-  CONSTELLATION_SRC_DIR: constellation-git
   OUTPUT_DIR: build-constellation-output
 run:
   path: quorum-pipeline-git/tasks/build-constellation-task
