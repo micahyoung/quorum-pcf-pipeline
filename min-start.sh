@@ -43,6 +43,9 @@ PRIVATE_CONFIG=tm1.conf nohup geth --datadir qdata/dd1 $GLOBAL_ARGS --rpcport 22
 #MIN echo "[*] Starting node 7"
 #MIN PRIVATE_CONFIG=tm7.conf nohup geth --datadir qdata/dd7 $GLOBAL_ARGS --rpcport 22006 --port 21006 2>>qdata/logs/7.log &
 
+sleep 2
+tail -f qdata/logs/*.log
+
 echo "[*] Waiting for nodes to start"
 sleep 10
 echo "[*] Sending first transaction"
