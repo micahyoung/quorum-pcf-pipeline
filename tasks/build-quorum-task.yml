@@ -3,8 +3,8 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: debian
-    tag: wheezy-slim
+    repository: golang
+    tag: 1.7-wheezy
 inputs:
   - name: quorum-git
   - name: quorum-pipeline-git

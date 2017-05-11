@@ -12,6 +12,6 @@ outputs:
   - name: build-constellation-output
 params:
   CONSTELLATION_SRC_DIR: constellation-git
-  OUTPUT_DIR: build-output
+  OUTPUT_DIR: build-constellation-output
 run:
   path: quorum-pipeline-git/tasks/build-constellation-task
