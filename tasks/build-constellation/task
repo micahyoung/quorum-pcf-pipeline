@@ -1,0 +1,21 @@
+#!/bin/bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
+true ${CONSTELLATION_SRC_DIR:?"!"}
+true ${OUTPUT_DIR:?"!"}
+
+apt-get update
+apt-get install libdb-dev libsodium-dev zlib1g-dev libtinfo-dev
+
+pushd $CONSTELLATION_SRC_DIR
+  stack install --allow-different-user
+popd
+
+pushd /root/.local/bin/
+  ldd constellation-node | awk '{print $3}' | xargs cp -t .
+popd
+
+cp /root/.local/bin/* \
+  $OUTPUT_DIR/

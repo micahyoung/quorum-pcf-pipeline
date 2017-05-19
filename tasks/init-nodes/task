@@ -1,0 +1,99 @@
+#!/bin/bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
+curl -L "https://cli.run.pivotal.io/stable?release=debian64&version=6.26.0&source=github-rel" > cfcli.deb
+dpkg -i cfcli.deb
+
+cf install-plugin \
+  https://github.com/cloudfoundry-incubator/cf-networking-release/releases/download/v0.25.0/network-policy-plugin-linux64 \
+  -f \
+;
+
+cf login -a "$CF_API" -u "$CF_USERNAME" -p "$CF_PASSWORD" -o "$CF_ORGANIZATION" -s "$CF_SPACE"
+
+if ! cf apps | grep bootnode; then
+  cf push bootnode -f pipelines/manifests/bootnode-manifest.yml --no-start
+fi
+if ! cf apps | grep node-1; then
+  cf push node-1   -f pipelines/manifests/node1-manifest.yml --no-start
+fi
+if ! cf apps | grep node-2; then
+  cf push node-2   -f pipelines/manifests/node2-manifest.yml --no-start
+fi
+if ! cf apps | grep node-4; then
+  cf push node-4   -f pipelines/manifests/node4-manifest.yml --no-start
+fi
+if ! cf apps | grep node-7; then
+  cf push node-7   -f pipelines/manifests/node7-manifest.yml --no-start
+fi
+
+cf allow-access node-2   node-1   --protocol tcp --port 9000
+cf allow-access node-4   node-1   --protocol tcp --port 9000
+cf allow-access node-7   node-1   --protocol tcp --port 9000
+cf allow-access bootnode node-1   --protocol udp --port 21000
+cf allow-access node-2   node-1   --protocol udp --port 21000
+cf allow-access node-4   node-1   --protocol udp --port 21000
+cf allow-access node-7   node-1   --protocol udp --port 21000
+cf allow-access bootnode node-1   --protocol tcp --port 21000
+cf allow-access node-2   node-1   --protocol tcp --port 21000
+cf allow-access node-4   node-1   --protocol tcp --port 21000
+cf allow-access node-7   node-1   --protocol tcp --port 21000
+cf allow-access bootnode node-1   --protocol tcp --port 22000
+cf allow-access node-2   node-1   --protocol tcp --port 22000
+cf allow-access node-4   node-1   --protocol tcp --port 22000
+cf allow-access node-7   node-1   --protocol tcp --port 22000
+
+cf allow-access node-1   node-2   --protocol tcp --port 9001
+cf allow-access node-4   node-2   --protocol tcp --port 9001
+cf allow-access node-7   node-2   --protocol tcp --port 9001
+cf allow-access bootnode node-2   --protocol udp --port 21001
+cf allow-access node-1   node-2   --protocol udp --port 21001
+cf allow-access node-4   node-2   --protocol udp --port 21001
+cf allow-access node-7   node-2   --protocol udp --port 21001
+cf allow-access bootnode node-2   --protocol tcp --port 21001
+cf allow-access node-1   node-2   --protocol tcp --port 21001
+cf allow-access node-4   node-2   --protocol tcp --port 21001
+cf allow-access node-7   node-2   --protocol tcp --port 21001
+cf allow-access bootnode node-2   --protocol tcp --port 22001
+cf allow-access node-1   node-2   --protocol tcp --port 22001
+cf allow-access node-4   node-2   --protocol tcp --port 22001
+cf allow-access node-7   node-2   --protocol tcp --port 22001
+
+cf allow-access node-1   node-4   --protocol tcp --port 9002
+cf allow-access node-2   node-4   --protocol tcp --port 9002
+cf allow-access node-7   node-4   --protocol tcp --port 9002
+cf allow-access bootnode node-4   --protocol udp --port 21002
+cf allow-access node-1   node-4   --protocol udp --port 21002
+cf allow-access node-2   node-4   --protocol udp --port 21002
+cf allow-access node-7   node-4   --protocol udp --port 21002
+cf allow-access bootnode node-4   --protocol tcp --port 21002
+cf allow-access node-1   node-4   --protocol tcp --port 21002
+cf allow-access node-2   node-4   --protocol tcp --port 21002
+cf allow-access node-7   node-4   --protocol tcp --port 21002
+cf allow-access bootnode node-4   --protocol tcp --port 22002
+cf allow-access node-1   node-4   --protocol tcp --port 22002
+cf allow-access node-2   node-4   --protocol tcp --port 22002
+cf allow-access node-7   node-4   --protocol tcp --port 22002
+
+cf allow-access node-1   node-7   --protocol tcp --port 9006
+cf allow-access node-2   node-7   --protocol tcp --port 9006
+cf allow-access node-4   node-7   --protocol tcp --port 9006
+cf allow-access bootnode node-7   --protocol udp --port 21006
+cf allow-access node-1   node-7   --protocol udp --port 21006
+cf allow-access node-2   node-7   --protocol udp --port 21006
+cf allow-access node-4   node-7   --protocol udp --port 21006
+cf allow-access bootnode node-7   --protocol tcp --port 21006
+cf allow-access node-1   node-7   --protocol tcp --port 21006
+cf allow-access node-2   node-7   --protocol tcp --port 21006
+cf allow-access node-4   node-7   --protocol tcp --port 21006
+cf allow-access bootnode node-7   --protocol tcp --port 22006
+cf allow-access node-1   node-7   --protocol tcp --port 22006
+cf allow-access node-2   node-7   --protocol tcp --port 22006
+cf allow-access node-4   node-7   --protocol tcp --port 22006
+
+cf allow-access node-1   bootnode --protocol udp --port 33445
+cf allow-access node-2   bootnode --protocol udp --port 33445
+cf allow-access node-4   bootnode --protocol udp --port 33445
+cf allow-access node-7   bootnode --protocol udp --port 33445

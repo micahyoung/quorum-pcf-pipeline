@@ -1,0 +1,23 @@
+#!/bin/bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
+mkdir -p bin
+
+cp artifacts/* bin/
+
+chmod +x bin/* 
+
+pushd bin/
+  export PATH=$PATH:`pwd`
+  export LD_LIBRARY_PATH=`pwd`
+popd
+
+pushd examples/examples/7nodes/
+  ./init.sh
+popd
+
+cp -r examples/examples/7nodes/* configs/
+
+ls -r configs/

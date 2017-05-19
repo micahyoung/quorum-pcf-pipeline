@@ -14,4 +14,4 @@ params:
   QUORUM_SRC_DIR: quorum-git
   OUTPUT_DIR: build-quorum-output
 run:
-  path: quorum-pipeline-git/tasks/build-quorum-task
+  path: quorum-pipeline-git/tasks/build-quorum/task

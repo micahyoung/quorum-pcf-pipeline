@@ -1,0 +1,18 @@
+---
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: buildpack-deps
+    tag: jessie-curl
+inputs:
+  - name: pipelines
+params:
+  CF_API: ~
+  CF_USERNAME: ~
+  CF_PASSWORD: ~
+  CF_ORGANIZATION: ~
+  CF_SPACE: ~
+run:
+  path: pipelines/tasks/init-nodes/task
+

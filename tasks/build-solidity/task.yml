@@ -1,0 +1,13 @@
+---
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: ethereum/solc
+    tag: stable
+inputs:
+  - name: pipelines
+outputs:
+  - name: solidity-bin
+run:
+  path: pipelines/tasks/build-solidity/task
