@@ -6,6 +6,8 @@ applications:
   memory: 1024MB
   no-route: true
   command: LD_LIBRARY_PATH=bin/ PATH=$PATH:bin/ ./blockmaker-node-start.sh
+  services:
+  - cf-credentials
   env:
     BOOTNODE_APPNAME: bootnode
     OTHER_NODE_APPNAME: node-1

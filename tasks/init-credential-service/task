@@ -3,23 +3,29 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+true ${SERVICE_NAME:?"!"}
 true ${CF_API:?"!"}
 true ${CF_USERNAME:?"!"}
 true ${CF_PASSWORD:?"!"}
 true ${CF_ORGANIZATION:?"!"}
 true ${CF_SPACE:?"!"}
 
-mkdir -p deploy/bin
-cp artifacts/* deploy/bin/
-cp pipelines/run-scripts/* deploy/
-cp -r configs/* deploy/
-
 curl -L "https://cli.run.pivotal.io/stable?release=debian64&version=6.26.0&source=github-rel" > cfcli.deb
 dpkg -i cfcli.deb
-cp $(which cf) deploy/bin/
-
-chmod +x deploy/bin/*
 
 cf login -a "$CF_API" -u "$CF_USERNAME" -p "$CF_PASSWORD" -o "$CF_ORGANIZATION" -s "$CF_SPACE"
-cf push    $NODE_NAME -p deploy/ -f pipelines/manifests/$MANIFEST_NAME --no-start
-cf start   $NODE_NAME
+cat > credentials.json <<EOF
+{
+  "CF_API": "$CF_API",
+  "CF_USERNAME": "$CF_USERNAME",
+  "CF_PASSWORD": "$CF_PASSWORD",
+  "CF_ORGANIZATION": "$CF_ORGANIZATION",
+  "CF_SPACE": "$CF_SPACE"
+}
+EOF
+
+if cf service $SERVICE_NAME; then
+  cf update-user-provided-service $SERVICE_NAME -p credentials.json
+else
+  cf create-user-provided-service $SERVICE_NAME -p credentials.json
+fi

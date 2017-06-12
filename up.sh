@@ -16,6 +16,7 @@ true ${CONCOURSE_APP_PIPELINE:?"!"}
 true ${STATE_REPO_URL:?"!"}
 true ${STATE_REPO_PRIVATE_KEY:?"!"}
 true ${APP_REPO_URL:?"!"}
+true ${CREDENTIAL_SERVICE_NAME:?"!"}
 true ${CF_API_URL:?"!"}
 true ${CF_USERNAME:?"!"}
 true ${CF_PASSWORD:?"!"}
@@ -44,8 +45,8 @@ if ! fly targets | grep $CONCOURSE_TARGET; then
   ;
 fi
 
-if ! [ -f state/quorum-pipeline-vars.yml ]; then
-  cat > state/quorum-pipeline-vars.yml <<EOF
+cat > state/quorum-pipeline-vars.yml <<EOF
+credential_service_name: $CREDENTIAL_SERVICE_NAME
 cf_api_url: $CF_API_URL
 cf_username: $CF_USERNAME
 cf_password: $CF_PASSWORD
@@ -56,7 +57,6 @@ github_release_owner: $GITHUB_RELEASE_OWNER
 github_release_repo: $GITHUB_RELEASE_REPO
 github_release_token: $GITHUB_RELEASE_TOKEN
 EOF
-fi
 
 fly set-pipeline \
   --target $CONCOURSE_TARGET \

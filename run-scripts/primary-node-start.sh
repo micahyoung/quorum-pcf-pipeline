@@ -11,11 +11,10 @@ true ${DATA_DIR:?"!"}
 true ${RPC_PORT:?"!"}
 true ${LISTEN_PORT:?"!"}
 true ${NODE_PORT:?"!"}
-true ${CF_API:?"!"}
-true ${CF_USERNAME:?"!"}
-true ${CF_PASSWORD:?"!"}
-true ${CF_ORGANIZATION:?"!"}
-true ${CF_SPACE:?"!"}
+true ${VCAP_SERVICES:?"!"}
+
+while read ENV_PAIR; do export "${ENV_PAIR}"; done \
+  < <(echo $VCAP_SERVICES | jq -r '.["user-provided"] | .[].credentials | to_entries[] | "\(.key)=\(.value)"')
 
 cf login -a "$CF_API" -u "$CF_USERNAME" -p "$CF_PASSWORD" -o "$CF_ORGANIZATION" -s "$CF_SPACE"
 
