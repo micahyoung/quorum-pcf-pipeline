@@ -87,7 +87,6 @@ jobs:
       CF_SPACE: {{cf_space}}
 - name: deploy-bootnode
   build_logs_to_retain: 10
-  serial_groups: [dependent-nodes]
   plan:
   - aggregate:
     - get: quorum-bin-release
@@ -96,6 +95,7 @@ jobs:
       trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
+      trigger: true
   - task: init-config
     file: quorum-pipeline-git/tasks/init-config/task.yml
     input_mapping:
@@ -120,7 +120,6 @@ jobs:
       CF_SPACE: {{cf_space}}
 - name: deploy-node1
   build_logs_to_retain: 10
-  serial_groups: [dependent-nodes]
   plan:
   - aggregate:
     - get: quorum-bin-release
@@ -130,6 +129,7 @@ jobs:
       passed: [deploy-bootnode]
     - get: quorum-pipeline-git
       passed: [deploy-bootnode]
+      trigger: true
   - task: init-config
     file: quorum-pipeline-git/tasks/init-config/task.yml
     input_mapping:
@@ -154,7 +154,6 @@ jobs:
       CF_SPACE: {{cf_space}}
 - name: deploy-node2
   build_logs_to_retain: 10
-  serial_groups: [dependent-nodes]
   plan:
   - aggregate:
     - get: quorum-bin-release
@@ -164,6 +163,7 @@ jobs:
       passed: [deploy-node1]
     - get: quorum-pipeline-git
       passed: [deploy-node1]
+      trigger: true
   - task: init-config
     file: quorum-pipeline-git/tasks/init-config/task.yml
     input_mapping:
@@ -188,7 +188,6 @@ jobs:
       CF_SPACE: {{cf_space}}
 - name: deploy-node4
   build_logs_to_retain: 10
-  serial_groups: [dependent-nodes]
   plan:
   - aggregate:
     - get: quorum-bin-release
@@ -198,6 +197,7 @@ jobs:
       passed: [deploy-node1]
     - get: quorum-pipeline-git
       passed: [deploy-node1]
+      trigger: true
   - task: init-config
     file: quorum-pipeline-git/tasks/init-config/task.yml
     input_mapping:
@@ -222,7 +222,6 @@ jobs:
       CF_SPACE: {{cf_space}}
 - name: deploy-node7
   build_logs_to_retain: 10
-  serial_groups: [dependent-nodes]
   plan:
   - aggregate:
     - get: quorum-bin-release
@@ -232,6 +231,7 @@ jobs:
       passed: [deploy-node1]
     - get: quorum-pipeline-git
       passed: [deploy-node1]
+      trigger: true
   - task: init-config
     file: quorum-pipeline-git/tasks/init-config/task.yml
     input_mapping:
@@ -249,6 +249,27 @@ jobs:
     params:
       NODE_NAME: node-7
       MANIFEST_NAME: node7-manifest.yml
+      CF_API: {{cf_api_url}}
+      CF_USERNAME: {{cf_username}}
+      CF_PASSWORD: {{cf_password}}
+      CF_ORGANIZATION: {{cf_org}}
+      CF_SPACE: {{cf_space}}
+- name: test-node1
+  build_logs_to_retain: 10
+  plan:
+  - aggregate:
+    - get: quorum-pipeline-git
+      trigger: true
+      passed:
+      - deploy-node2
+      - deploy-node4
+      - deploy-node7
+  - task: test-nodes
+    file: quorum-pipeline-git/tasks/test-nodes/task.yml
+    input_mapping:
+      pipelines: quorum-pipeline-git
+    params:
+      NODE_NAME: node-1
       CF_API: {{cf_api_url}}
       CF_USERNAME: {{cf_username}}
       CF_PASSWORD: {{cf_password}}
