@@ -61,21 +61,21 @@ cf allow-access node-1   node-2   --protocol tcp --port 22001
 cf allow-access node-4   node-2   --protocol tcp --port 22001
 cf allow-access node-7   node-2   --protocol tcp --port 22001
 
-cf allow-access node-1   node-4   --protocol tcp --port 9002
-cf allow-access node-2   node-4   --protocol tcp --port 9002
-cf allow-access node-7   node-4   --protocol tcp --port 9002
-cf allow-access bootnode node-4   --protocol udp --port 21002
-cf allow-access node-1   node-4   --protocol udp --port 21002
-cf allow-access node-2   node-4   --protocol udp --port 21002
-cf allow-access node-7   node-4   --protocol udp --port 21002
-cf allow-access bootnode node-4   --protocol tcp --port 21002
-cf allow-access node-1   node-4   --protocol tcp --port 21002
-cf allow-access node-2   node-4   --protocol tcp --port 21002
-cf allow-access node-7   node-4   --protocol tcp --port 21002
-cf allow-access bootnode node-4   --protocol tcp --port 22002
-cf allow-access node-1   node-4   --protocol tcp --port 22002
-cf allow-access node-2   node-4   --protocol tcp --port 22002
-cf allow-access node-7   node-4   --protocol tcp --port 22002
+cf allow-access node-1   node-4   --protocol tcp --port 9003
+cf allow-access node-2   node-4   --protocol tcp --port 9003
+cf allow-access node-7   node-4   --protocol tcp --port 9003
+cf allow-access bootnode node-4   --protocol udp --port 21003
+cf allow-access node-1   node-4   --protocol udp --port 21003
+cf allow-access node-2   node-4   --protocol udp --port 21003
+cf allow-access node-7   node-4   --protocol udp --port 21003
+cf allow-access bootnode node-4   --protocol tcp --port 21003
+cf allow-access node-1   node-4   --protocol tcp --port 21003
+cf allow-access node-2   node-4   --protocol tcp --port 21003
+cf allow-access node-7   node-4   --protocol tcp --port 21003
+cf allow-access bootnode node-4   --protocol tcp --port 22003
+cf allow-access node-1   node-4   --protocol tcp --port 22003
+cf allow-access node-2   node-4   --protocol tcp --port 22003
+cf allow-access node-7   node-4   --protocol tcp --port 22003
 
 cf allow-access node-1   node-7   --protocol tcp --port 9006
 cf allow-access node-2   node-7   --protocol tcp --port 9006
