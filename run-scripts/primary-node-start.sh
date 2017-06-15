@@ -2,9 +2,9 @@
 set -u
 set -e
 
+true ${BOOTNODE_APPNAME:?"!"}
 true ${NETID:?"!"}
 true ${BOOTNODE_HASH:?"!"}
-true ${BOOTNODE_APPNAME:?"!"}
 true ${BOOTNODE_PORT:?"!"}
 true ${PRIVATE_CONFIG_FILE:?"!"}
 true ${DATA_DIR:?"!"}
