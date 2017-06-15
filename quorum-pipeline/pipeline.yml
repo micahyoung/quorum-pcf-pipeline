@@ -261,6 +261,7 @@ jobs:
     - get: quorum-pipeline-git
       trigger: true
       passed:
+      - deploy-node1
       - deploy-node2
       - deploy-node4
       - deploy-node7
