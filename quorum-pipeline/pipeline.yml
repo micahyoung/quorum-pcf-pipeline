@@ -158,11 +158,11 @@ jobs:
   - aggregate:
     - get: quorum-bin-release
       globs: ['*']
-      passed: [deploy-node1]
+      passed: [deploy-bootnode]
     - get: quorum-examples-git
-      passed: [deploy-node1]
+      passed: [deploy-bootnode]
     - get: quorum-pipeline-git
-      passed: [deploy-node1]
+      passed: [deploy-bootnode]
       trigger: true
   - task: init-config
     file: quorum-pipeline-git/tasks/init-config/task.yml
@@ -192,11 +192,11 @@ jobs:
   - aggregate:
     - get: quorum-bin-release
       globs: ['*']
-      passed: [deploy-node1]
+      passed: [deploy-bootnode]
     - get: quorum-examples-git
-      passed: [deploy-node1]
+      passed: [deploy-bootnode]
     - get: quorum-pipeline-git
-      passed: [deploy-node1]
+      passed: [deploy-bootnode]
       trigger: true
   - task: init-config
     file: quorum-pipeline-git/tasks/init-config/task.yml
@@ -226,11 +226,11 @@ jobs:
   - aggregate:
     - get: quorum-bin-release
       globs: ['*']
-      passed: [deploy-node1]
+      passed: [deploy-bootnode]
     - get: quorum-examples-git
-      passed: [deploy-node1]
+      passed: [deploy-bootnode]
     - get: quorum-pipeline-git
-      passed: [deploy-node1]
+      passed: [deploy-bootnode]
       trigger: true
   - task: init-config
     file: quorum-pipeline-git/tasks/init-config/task.yml
