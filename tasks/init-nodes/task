@@ -13,21 +13,17 @@ cf install-plugin \
 
 cf login -a "$CF_API" -u "$CF_USERNAME" -p "$CF_PASSWORD" -o "$CF_ORGANIZATION" -s "$CF_SPACE"
 
-if ! cf apps | grep bootnode; then
-  cf push bootnode -f pipelines/manifests/bootnode-manifest.yml --no-start
-fi
-if ! cf apps | grep node-1; then
-  cf push node-1   -f pipelines/manifests/node1-manifest.yml --no-start
-fi
-if ! cf apps | grep node-2; then
-  cf push node-2   -f pipelines/manifests/node2-manifest.yml --no-start
-fi
-if ! cf apps | grep node-4; then
-  cf push node-4   -f pipelines/manifests/node4-manifest.yml --no-start
-fi
-if ! cf apps | grep node-7; then
-  cf push node-7   -f pipelines/manifests/node7-manifest.yml --no-start
-fi
+cf delete -f bootnode
+cf delete -f node-1
+cf delete -f node-2
+cf delete -f node-4
+cf delete -f node-7
+
+cf push bootnode -f pipelines/manifests/bootnode-manifest.yml --no-start
+cf push node-1   -f pipelines/manifests/node1-manifest.yml --no-start
+cf push node-2   -f pipelines/manifests/node2-manifest.yml --no-start
+cf push node-4   -f pipelines/manifests/node4-manifest.yml --no-start
+cf push node-7   -f pipelines/manifests/node7-manifest.yml --no-start
 
 cf allow-access node-2   node-1   --protocol tcp --port 9000
 cf allow-access node-4   node-1   --protocol tcp --port 9000
