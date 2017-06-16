@@ -16,80 +16,221 @@ cf login -a "$CF_API" -u "$CF_USERNAME" -p "$CF_PASSWORD" -o "$CF_ORGANIZATION" 
 cf delete -f bootnode
 cf delete -f node-1
 cf delete -f node-2
+cf delete -f node-3
 cf delete -f node-4
+cf delete -f node-5
+cf delete -f node-6
 cf delete -f node-7
 
 cf push bootnode -f pipelines/manifests/bootnode-manifest.yml --no-start
 cf push node-1   -f pipelines/manifests/node1-manifest.yml --no-start
 cf push node-2   -f pipelines/manifests/node2-manifest.yml --no-start
+cf push node-3   -f pipelines/manifests/node3-manifest.yml --no-start
 cf push node-4   -f pipelines/manifests/node4-manifest.yml --no-start
+cf push node-5   -f pipelines/manifests/node5-manifest.yml --no-start
+cf push node-6   -f pipelines/manifests/node6-manifest.yml --no-start
 cf push node-7   -f pipelines/manifests/node7-manifest.yml --no-start
 
 cf allow-access node-2   node-1   --protocol tcp --port 9000
+cf allow-access node-3   node-1   --protocol tcp --port 9000
 cf allow-access node-4   node-1   --protocol tcp --port 9000
+cf allow-access node-5   node-1   --protocol tcp --port 9000
+cf allow-access node-6   node-1   --protocol tcp --port 9000
 cf allow-access node-7   node-1   --protocol tcp --port 9000
 cf allow-access bootnode node-1   --protocol udp --port 21000
 cf allow-access node-2   node-1   --protocol udp --port 21000
+cf allow-access node-3   node-1   --protocol udp --port 21000
 cf allow-access node-4   node-1   --protocol udp --port 21000
+cf allow-access node-5   node-1   --protocol udp --port 21000
+cf allow-access node-6   node-1   --protocol udp --port 21000
 cf allow-access node-7   node-1   --protocol udp --port 21000
 cf allow-access bootnode node-1   --protocol tcp --port 21000
 cf allow-access node-2   node-1   --protocol tcp --port 21000
+cf allow-access node-3   node-1   --protocol tcp --port 21000
 cf allow-access node-4   node-1   --protocol tcp --port 21000
+cf allow-access node-5   node-1   --protocol tcp --port 21000
+cf allow-access node-6   node-1   --protocol tcp --port 21000
 cf allow-access node-7   node-1   --protocol tcp --port 21000
 cf allow-access bootnode node-1   --protocol tcp --port 22000
 cf allow-access node-2   node-1   --protocol tcp --port 22000
+cf allow-access node-3   node-1   --protocol tcp --port 22000
 cf allow-access node-4   node-1   --protocol tcp --port 22000
+cf allow-access node-5   node-1   --protocol tcp --port 22000
+cf allow-access node-6   node-1   --protocol tcp --port 22000
 cf allow-access node-7   node-1   --protocol tcp --port 22000
 
 cf allow-access node-1   node-2   --protocol tcp --port 9001
+cf allow-access node-3   node-2   --protocol tcp --port 9001
 cf allow-access node-4   node-2   --protocol tcp --port 9001
+cf allow-access node-5   node-2   --protocol tcp --port 9001
+cf allow-access node-6   node-2   --protocol tcp --port 9001
 cf allow-access node-7   node-2   --protocol tcp --port 9001
 cf allow-access bootnode node-2   --protocol udp --port 21001
 cf allow-access node-1   node-2   --protocol udp --port 21001
+cf allow-access node-3   node-2   --protocol udp --port 21001
 cf allow-access node-4   node-2   --protocol udp --port 21001
+cf allow-access node-5   node-2   --protocol udp --port 21001
+cf allow-access node-6   node-2   --protocol udp --port 21001
 cf allow-access node-7   node-2   --protocol udp --port 21001
 cf allow-access bootnode node-2   --protocol tcp --port 21001
 cf allow-access node-1   node-2   --protocol tcp --port 21001
+cf allow-access node-3   node-2   --protocol tcp --port 21001
 cf allow-access node-4   node-2   --protocol tcp --port 21001
+cf allow-access node-5   node-2   --protocol tcp --port 21001
+cf allow-access node-6   node-2   --protocol tcp --port 21001
 cf allow-access node-7   node-2   --protocol tcp --port 21001
 cf allow-access bootnode node-2   --protocol tcp --port 22001
 cf allow-access node-1   node-2   --protocol tcp --port 22001
+cf allow-access node-3   node-2   --protocol tcp --port 22001
 cf allow-access node-4   node-2   --protocol tcp --port 22001
+cf allow-access node-5   node-2   --protocol tcp --port 22001
+cf allow-access node-6   node-2   --protocol tcp --port 22001
 cf allow-access node-7   node-2   --protocol tcp --port 22001
+
+cf allow-access node-1   node-3   --protocol tcp --port 9002
+cf allow-access node-2   node-3   --protocol tcp --port 9002
+cf allow-access node-4   node-3   --protocol tcp --port 9002
+cf allow-access node-5   node-3   --protocol tcp --port 9002
+cf allow-access node-6   node-3   --protocol tcp --port 9002
+cf allow-access node-7   node-3   --protocol tcp --port 9002
+cf allow-access bootnode node-3   --protocol udp --port 21002
+cf allow-access node-1   node-3   --protocol udp --port 21002
+cf allow-access node-2   node-3   --protocol udp --port 21002
+cf allow-access node-4   node-3   --protocol udp --port 21002
+cf allow-access node-5   node-3   --protocol udp --port 21002
+cf allow-access node-6   node-3   --protocol udp --port 21002
+cf allow-access node-7   node-3   --protocol udp --port 21002
+cf allow-access bootnode node-3   --protocol tcp --port 21002
+cf allow-access node-1   node-3   --protocol tcp --port 21002
+cf allow-access node-2   node-3   --protocol tcp --port 21002
+cf allow-access node-4   node-3   --protocol tcp --port 21002
+cf allow-access node-5   node-3   --protocol tcp --port 21002
+cf allow-access node-6   node-3   --protocol tcp --port 21002
+cf allow-access node-7   node-3   --protocol tcp --port 21002
+cf allow-access bootnode node-3   --protocol tcp --port 22002
+cf allow-access node-1   node-3   --protocol tcp --port 22002
+cf allow-access node-2   node-3   --protocol tcp --port 22002
+cf allow-access node-4   node-3   --protocol tcp --port 22002
+cf allow-access node-5   node-3   --protocol tcp --port 22002
+cf allow-access node-6   node-3   --protocol tcp --port 22002
+cf allow-access node-7   node-3   --protocol tcp --port 22002
 
 cf allow-access node-1   node-4   --protocol tcp --port 9003
 cf allow-access node-2   node-4   --protocol tcp --port 9003
+cf allow-access node-3   node-4   --protocol tcp --port 9003
+cf allow-access node-5   node-4   --protocol tcp --port 9003
+cf allow-access node-6   node-4   --protocol tcp --port 9003
 cf allow-access node-7   node-4   --protocol tcp --port 9003
 cf allow-access bootnode node-4   --protocol udp --port 21003
 cf allow-access node-1   node-4   --protocol udp --port 21003
 cf allow-access node-2   node-4   --protocol udp --port 21003
+cf allow-access node-3   node-4   --protocol udp --port 21003
+cf allow-access node-5   node-4   --protocol udp --port 21003
+cf allow-access node-6   node-4   --protocol udp --port 21003
 cf allow-access node-7   node-4   --protocol udp --port 21003
 cf allow-access bootnode node-4   --protocol tcp --port 21003
 cf allow-access node-1   node-4   --protocol tcp --port 21003
 cf allow-access node-2   node-4   --protocol tcp --port 21003
+cf allow-access node-3   node-4   --protocol tcp --port 21003
+cf allow-access node-5   node-4   --protocol tcp --port 21003
+cf allow-access node-6   node-4   --protocol tcp --port 21003
 cf allow-access node-7   node-4   --protocol tcp --port 21003
 cf allow-access bootnode node-4   --protocol tcp --port 22003
 cf allow-access node-1   node-4   --protocol tcp --port 22003
 cf allow-access node-2   node-4   --protocol tcp --port 22003
+cf allow-access node-3   node-4   --protocol tcp --port 22003
+cf allow-access node-5   node-4   --protocol tcp --port 22003
+cf allow-access node-6   node-4   --protocol tcp --port 22003
 cf allow-access node-7   node-4   --protocol tcp --port 22003
+
+cf allow-access node-1   node-5   --protocol tcp --port 9004
+cf allow-access node-2   node-5   --protocol tcp --port 9004
+cf allow-access node-3   node-5   --protocol tcp --port 9004
+cf allow-access node-4   node-5   --protocol tcp --port 9004
+cf allow-access node-6   node-5   --protocol tcp --port 9004
+cf allow-access node-7   node-5   --protocol tcp --port 9004
+cf allow-access bootnode node-5   --protocol udp --port 21004
+cf allow-access node-1   node-5   --protocol udp --port 21004
+cf allow-access node-2   node-5   --protocol udp --port 21004
+cf allow-access node-3   node-5   --protocol udp --port 21004
+cf allow-access node-4   node-5   --protocol udp --port 21004
+cf allow-access node-6   node-5   --protocol udp --port 21004
+cf allow-access node-7   node-5   --protocol udp --port 21004
+cf allow-access bootnode node-5   --protocol tcp --port 21004
+cf allow-access node-1   node-5   --protocol tcp --port 21004
+cf allow-access node-2   node-5   --protocol tcp --port 21004
+cf allow-access node-3   node-5   --protocol tcp --port 21004
+cf allow-access node-4   node-5   --protocol tcp --port 21004
+cf allow-access node-6   node-5   --protocol tcp --port 21004
+cf allow-access node-7   node-5   --protocol tcp --port 21004
+cf allow-access bootnode node-5   --protocol tcp --port 22004
+cf allow-access node-1   node-5   --protocol tcp --port 22004
+cf allow-access node-2   node-5   --protocol tcp --port 22004
+cf allow-access node-3   node-5   --protocol tcp --port 22004
+cf allow-access node-4   node-5   --protocol tcp --port 22004
+cf allow-access node-6   node-5   --protocol tcp --port 22004
+cf allow-access node-7   node-5   --protocol tcp --port 22004
+
+cf allow-access node-1   node-6   --protocol tcp --port 9005
+cf allow-access node-2   node-6   --protocol tcp --port 9005
+cf allow-access node-3   node-6   --protocol tcp --port 9005
+cf allow-access node-4   node-6   --protocol tcp --port 9005
+cf allow-access node-5   node-6   --protocol tcp --port 9005
+cf allow-access node-7   node-6   --protocol tcp --port 9005
+cf allow-access bootnode node-6   --protocol udp --port 21005
+cf allow-access node-1   node-6   --protocol udp --port 21005
+cf allow-access node-2   node-6   --protocol udp --port 21005
+cf allow-access node-3   node-6   --protocol udp --port 21005
+cf allow-access node-4   node-6   --protocol udp --port 21005
+cf allow-access node-5   node-6   --protocol udp --port 21005
+cf allow-access node-7   node-6   --protocol udp --port 21005
+cf allow-access bootnode node-6   --protocol tcp --port 21005
+cf allow-access node-1   node-6   --protocol tcp --port 21005
+cf allow-access node-2   node-6   --protocol tcp --port 21005
+cf allow-access node-3   node-6   --protocol tcp --port 21005
+cf allow-access node-4   node-6   --protocol tcp --port 21005
+cf allow-access node-5   node-6   --protocol tcp --port 21005
+cf allow-access node-7   node-6   --protocol tcp --port 21005
+cf allow-access bootnode node-6   --protocol tcp --port 22005
+cf allow-access node-1   node-6   --protocol tcp --port 22005
+cf allow-access node-2   node-6   --protocol tcp --port 22005
+cf allow-access node-3   node-6   --protocol tcp --port 22005
+cf allow-access node-4   node-6   --protocol tcp --port 22005
+cf allow-access node-5   node-6   --protocol tcp --port 22005
+cf allow-access node-7   node-6   --protocol tcp --port 22005
 
 cf allow-access node-1   node-7   --protocol tcp --port 9006
 cf allow-access node-2   node-7   --protocol tcp --port 9006
+cf allow-access node-3   node-7   --protocol tcp --port 9006
 cf allow-access node-4   node-7   --protocol tcp --port 9006
+cf allow-access node-5   node-7   --protocol tcp --port 9006
+cf allow-access node-6   node-7   --protocol tcp --port 9006
 cf allow-access bootnode node-7   --protocol udp --port 21006
 cf allow-access node-1   node-7   --protocol udp --port 21006
 cf allow-access node-2   node-7   --protocol udp --port 21006
+cf allow-access node-3   node-7   --protocol udp --port 21006
 cf allow-access node-4   node-7   --protocol udp --port 21006
+cf allow-access node-5   node-7   --protocol udp --port 21006
+cf allow-access node-6   node-7   --protocol udp --port 21006
 cf allow-access bootnode node-7   --protocol tcp --port 21006
 cf allow-access node-1   node-7   --protocol tcp --port 21006
 cf allow-access node-2   node-7   --protocol tcp --port 21006
+cf allow-access node-3   node-7   --protocol tcp --port 21006
 cf allow-access node-4   node-7   --protocol tcp --port 21006
+cf allow-access node-5   node-7   --protocol tcp --port 21006
+cf allow-access node-6   node-7   --protocol tcp --port 21006
 cf allow-access bootnode node-7   --protocol tcp --port 22006
 cf allow-access node-1   node-7   --protocol tcp --port 22006
 cf allow-access node-2   node-7   --protocol tcp --port 22006
+cf allow-access node-3   node-7   --protocol tcp --port 22006
 cf allow-access node-4   node-7   --protocol tcp --port 22006
+cf allow-access node-5   node-7   --protocol tcp --port 22006
+cf allow-access node-6   node-7   --protocol tcp --port 22006
 
 cf allow-access node-1   bootnode --protocol udp --port 33445
 cf allow-access node-2   bootnode --protocol udp --port 33445
+cf allow-access node-3   bootnode --protocol udp --port 33445
 cf allow-access node-4   bootnode --protocol udp --port 33445
+cf allow-access node-5   bootnode --protocol udp --port 33445
+cf allow-access node-6   bootnode --protocol udp --port 33445
 cf allow-access node-7   bootnode --protocol udp --port 33445

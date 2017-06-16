@@ -186,6 +186,40 @@ jobs:
       CF_PASSWORD: {{cf_password}}
       CF_ORGANIZATION: {{cf_org}}
       CF_SPACE: {{cf_space}}
+- name: deploy-node3
+  build_logs_to_retain: 10
+  plan:
+  - aggregate:
+    - get: quorum-bin-release
+      globs: ['*']
+      passed: [deploy-bootnode]
+    - get: quorum-examples-git
+      passed: [deploy-bootnode]
+    - get: quorum-pipeline-git
+      passed: [deploy-bootnode]
+      trigger: true
+  - task: init-config
+    file: quorum-pipeline-git/tasks/init-config/task.yml
+    input_mapping:
+      artifacts: quorum-bin-release
+      examples: quorum-examples-git
+      pipelines: quorum-pipeline-git
+    output_mapping:
+      configs: build-config-output
+  - task: deploy-node
+    file: quorum-pipeline-git/tasks/deploy-node/task.yml
+    input_mapping:
+      artifacts: quorum-bin-release
+      configs: build-config-output
+      pipelines: quorum-pipeline-git
+    params:
+      NODE_NAME: node-3
+      MANIFEST_NAME: node3-manifest.yml
+      CF_API: {{cf_api_url}}
+      CF_USERNAME: {{cf_username}}
+      CF_PASSWORD: {{cf_password}}
+      CF_ORGANIZATION: {{cf_org}}
+      CF_SPACE: {{cf_space}}
 - name: deploy-node4
   build_logs_to_retain: 10
   plan:
@@ -215,6 +249,74 @@ jobs:
     params:
       NODE_NAME: node-4
       MANIFEST_NAME: node4-manifest.yml
+      CF_API: {{cf_api_url}}
+      CF_USERNAME: {{cf_username}}
+      CF_PASSWORD: {{cf_password}}
+      CF_ORGANIZATION: {{cf_org}}
+      CF_SPACE: {{cf_space}}
+- name: deploy-node5
+  build_logs_to_retain: 10
+  plan:
+  - aggregate:
+    - get: quorum-bin-release
+      globs: ['*']
+      passed: [deploy-bootnode]
+    - get: quorum-examples-git
+      passed: [deploy-bootnode]
+    - get: quorum-pipeline-git
+      passed: [deploy-bootnode]
+      trigger: true
+  - task: init-config
+    file: quorum-pipeline-git/tasks/init-config/task.yml
+    input_mapping:
+      artifacts: quorum-bin-release
+      examples: quorum-examples-git
+      pipelines: quorum-pipeline-git
+    output_mapping:
+      configs: build-config-output
+  - task: deploy-node
+    file: quorum-pipeline-git/tasks/deploy-node/task.yml
+    input_mapping:
+      artifacts: quorum-bin-release
+      configs: build-config-output
+      pipelines: quorum-pipeline-git
+    params:
+      NODE_NAME: node-5
+      MANIFEST_NAME: node5-manifest.yml
+      CF_API: {{cf_api_url}}
+      CF_USERNAME: {{cf_username}}
+      CF_PASSWORD: {{cf_password}}
+      CF_ORGANIZATION: {{cf_org}}
+      CF_SPACE: {{cf_space}}
+- name: deploy-node6
+  build_logs_to_retain: 10
+  plan:
+  - aggregate:
+    - get: quorum-bin-release
+      globs: ['*']
+      passed: [deploy-bootnode]
+    - get: quorum-examples-git
+      passed: [deploy-bootnode]
+    - get: quorum-pipeline-git
+      passed: [deploy-bootnode]
+      trigger: true
+  - task: init-config
+    file: quorum-pipeline-git/tasks/init-config/task.yml
+    input_mapping:
+      artifacts: quorum-bin-release
+      examples: quorum-examples-git
+      pipelines: quorum-pipeline-git
+    output_mapping:
+      configs: build-config-output
+  - task: deploy-node
+    file: quorum-pipeline-git/tasks/deploy-node/task.yml
+    input_mapping:
+      artifacts: quorum-bin-release
+      configs: build-config-output
+      pipelines: quorum-pipeline-git
+    params:
+      NODE_NAME: node-6
+      MANIFEST_NAME: node6-manifest.yml
       CF_API: {{cf_api_url}}
       CF_USERNAME: {{cf_username}}
       CF_PASSWORD: {{cf_password}}
@@ -263,7 +365,10 @@ jobs:
       passed:
       - deploy-node1
       - deploy-node2
+      - deploy-node3
       - deploy-node4
+      - deploy-node5
+      - deploy-node6
       - deploy-node7
   - task: test-nodes
     file: quorum-pipeline-git/tasks/test-nodes/task.yml
