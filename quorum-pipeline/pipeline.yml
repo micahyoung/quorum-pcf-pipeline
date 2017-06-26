@@ -2,7 +2,7 @@ resources:
 - name: quorum-pipeline-git
   type: git
   source:
-    branch: wip/other-node-fix
+    branch: master
     uri: {{pipeline_repo_url}}
 - name: quorum-git
   type: git
