@@ -3,6 +3,7 @@ set -u
 set -e
 
 true ${BOOTNODE_APPNAME:?"!"}
+true ${OTHER_NODE_APPNAME:?"!"}
 true ${NETID:?"!"}
 true ${BOOTNODE_HASH:?"!"}
 true ${BOOTNODE_PORT:?"!"}
@@ -11,6 +12,7 @@ true ${DATA_DIR:?"!"}
 true ${RPC_PORT:?"!"}
 true ${LISTEN_PORT:?"!"}
 true ${NODE_PORT:?"!"}
+true ${OTHER_NODE_PORT:?"!"}
 true ${VCAP_SERVICES:?"!"}
 
 while read ENV_PAIR; do export "${ENV_PAIR}"; done \
@@ -22,9 +24,12 @@ NODE_IP=$(hostname --ip-address)
 echo "NODE_IP=$NODE_IP"
 BOOTNODE_IP=$(cf ssh $BOOTNODE_APPNAME -c "hostname --ip-address")
 echo "BOOTNODE_IP=$BOOTNODE_IP"
+OTHER_NODE_IP=$(cf ssh $OTHER_NODE_APPNAME -c "hostname --ip-address")
+echo "OTHER_NODE_IP=$OTHER_NODE_IP"
 
 sed -ibak "s|url = .*|url = \"http://$NODE_IP:$NODE_PORT/\"|" $PRIVATE_CONFIG_FILE
 sed -ibak "s|port = .*|port = $NODE_PORT|" $PRIVATE_CONFIG_FILE
+sed -ibak "s|otherNodeUrls = .*|otherNodeUrls = [\"http://$OTHER_NODE_IP:$OTHER_NODE_PORT/\"]|" $PRIVATE_CONFIG_FILE
 
 constellation-node \
   --verbosity=9 \
