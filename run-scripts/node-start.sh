@@ -6,14 +6,13 @@ true ${NETID:?"!"}
 true ${BOOTNODE_HASH:?"!"}
 true ${BOOTNODE_APPNAME:?"!"}
 true ${BOOTNODE_PORT:?"!"}
+true ${OTHER_NODE_APPNAME:?"!"}
+true ${OTHER_NODE_PORT:?"!"}
 true ${PRIVATE_CONFIG_FILE:?"!"}
 true ${DATA_DIR:?"!"}
 true ${RPC_PORT:?"!"}
 true ${LISTEN_PORT:?"!"}
 true ${NODE_PORT:?"!"}
-true ${OTHER_NODE_APPNAME:?"!"}
-true ${OTHER_NODE_PORT:?"!"}
-true ${OTHER_NODE_PORT:?"!"}
 true ${VCAP_SERVICES:?"!"}
 
 while read ENV_PAIR; do export "${ENV_PAIR}"; done \
