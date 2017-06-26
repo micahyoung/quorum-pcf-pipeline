@@ -4,7 +4,6 @@ set -e
 
 true ${NETID:?"!"}
 true ${BOOTNODE_HASH:?"!"}
-true ${BOOTNODE_APPNAME:?"!"}
 true ${BOOTNODE_PORT:?"!"}
 true ${PRIVATE_CONFIG_FILE:?"!"}
 true ${DATA_DIR:?"!"}
@@ -16,11 +15,10 @@ true ${VCAP_SERVICES:?"!"}
 while read ENV_PAIR; do export "${ENV_PAIR}"; done \
   < <(echo $VCAP_SERVICES | jq -r '.["user-provided"] | .[].credentials | to_entries[] | "\(.key)=\(.value)"')
 
-cf login -a "$CF_API" -u "$CF_USERNAME" -p "$CF_PASSWORD" -o "$CF_ORGANIZATION" -s "$CF_SPACE"
+true ${BOOTNODE_IP:?"!missing from VCAP_SERVICES"}
 
 NODE_IP=$(hostname --ip-address)
 echo "NODE_IP=$NODE_IP"
-BOOTNODE_IP=$(cf ssh $BOOTNODE_APPNAME -c "hostname --ip-address")
 echo "BOOTNODE_IP=$BOOTNODE_IP"
 
 sed -ibak "s|url = .*|url = \"http://$NODE_IP:$NODE_PORT/\"|" $PRIVATE_CONFIG_FILE

@@ -9,10 +9,12 @@ inputs:
   - name: pipelines
 params:
   SERVICE_NAME: ~
+  BOOTNODE_APPNAME: ~
+  OTHER_NODE_APPNAME: ~
   CF_API: ~
   CF_USERNAME: ~
   CF_PASSWORD: ~
   CF_ORGANIZATION: ~
   CF_SPACE: ~
 run:
-  path: pipelines/tasks/init-credential-service/task
+  path: pipelines/tasks/update-ip-service/task

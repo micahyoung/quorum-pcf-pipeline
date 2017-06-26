@@ -22,6 +22,12 @@ cf delete -f node-5
 cf delete -f node-6
 cf delete -f node-7
 
+cf delete-service -f ip-service
+
+####
+
+cf create-user-provided-service ip-service -p '{}'
+
 cf push bootnode -f pipelines/manifests/bootnode-manifest.yml --no-start
 cf push node-1   -f pipelines/manifests/node1-manifest.yml --no-start
 cf push node-2   -f pipelines/manifests/node2-manifest.yml --no-start

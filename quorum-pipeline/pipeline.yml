@@ -69,22 +69,6 @@ jobs:
       CF_PASSWORD: {{cf_password}}
       CF_ORGANIZATION: {{cf_org}}
       CF_SPACE: {{cf_space}}
-- name: init-credential-service
-  build_logs_to_retain: 10
-  plan:
-  - aggregate:
-    - get: quorum-pipeline-git
-  - task: init-credential-service
-    file: quorum-pipeline-git/tasks/init-credential-service/task.yml
-    input_mapping:
-      pipelines: quorum-pipeline-git
-    params:
-      SERVICE_NAME: {{credential_service_name}}
-      CF_API: {{cf_api_url}}
-      CF_USERNAME: {{cf_username}}
-      CF_PASSWORD: {{cf_password}}
-      CF_ORGANIZATION: {{cf_org}}
-      CF_SPACE: {{cf_space}}
 - name: deploy-bootnode
   build_logs_to_retain: 10
   plan:
@@ -113,6 +97,19 @@ jobs:
     params:
       NODE_NAME: bootnode
       MANIFEST_NAME: bootnode-manifest.yml
+      CF_API: {{cf_api_url}}
+      CF_USERNAME: {{cf_username}}
+      CF_PASSWORD: {{cf_password}}
+      CF_ORGANIZATION: {{cf_org}}
+      CF_SPACE: {{cf_space}}
+  - task: update-ip-service
+    file: quorum-pipeline-git/tasks/update-ip-service/task.yml
+    input_mapping:
+      pipelines: quorum-pipeline-git
+    params:
+      SERVICE_NAME: ip-service
+      BOOTNODE_APPNAME: bootnode
+      OTHER_NODE_APPNAME: node-1
       CF_API: {{cf_api_url}}
       CF_USERNAME: {{cf_username}}
       CF_PASSWORD: {{cf_password}}
@@ -147,6 +144,19 @@ jobs:
     params:
       NODE_NAME: node-1
       MANIFEST_NAME: node1-manifest.yml
+      CF_API: {{cf_api_url}}
+      CF_USERNAME: {{cf_username}}
+      CF_PASSWORD: {{cf_password}}
+      CF_ORGANIZATION: {{cf_org}}
+      CF_SPACE: {{cf_space}}
+  - task: update-ip-service
+    file: quorum-pipeline-git/tasks/update-ip-service/task.yml
+    input_mapping:
+      pipelines: quorum-pipeline-git
+    params:
+      SERVICE_NAME: ip-service
+      BOOTNODE_APPNAME: bootnode
+      OTHER_NODE_APPNAME: node-1
       CF_API: {{cf_api_url}}
       CF_USERNAME: {{cf_username}}
       CF_PASSWORD: {{cf_password}}
