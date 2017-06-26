@@ -9,8 +9,8 @@ applications:
   services:
   - cf-credentials
   env:
-    BOOTNODE_APPNAME: bootnode
     NETID: 87234
+    BOOTNODE_APPNAME: bootnode
     BOOTNODE_HASH: 61077a284f5ba7607ab04f33cfde2750d659ad9af962516e159cf6ce708646066cd927a900944ce393b98b95c914e4d6c54b099f568342647a1cd4a262cc0423
     BOOTNODE_PORT: 33445
     NODE_PORT: 9000
