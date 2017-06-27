@@ -98,6 +98,11 @@ jobs:
     input_mapping:
       pipelines: quorum-pipeline-git
     params:
+      CF_API: {{cf_api_url}}
+      CF_USERNAME: {{cf_username}}
+      CF_PASSWORD: {{cf_password}}
+      CF_ORGANIZATION: {{cf_org}}
+      CF_SPACE: {{cf_space}}
 - name: force-deploy
   build_logs_to_retain: 10
   plan:
