@@ -91,10 +91,13 @@ jobs:
 - name: init-nodes
   build_logs_to_retain: 10
   plan:
-  - get: quorum-pcf-git
+  - aggregate:
+    - get: quorum-pipeline-git
+    - get: quorum-pcf-git
   - task: init-nodes
     file: quorum-pipeline-git/tasks/init-nodes/task.yml
     input_mapping:
+      pipelines: quorum-pipeline-git
       repo: quorum-pcf-git
     params:
       CF_API: {{cf_api_url}}

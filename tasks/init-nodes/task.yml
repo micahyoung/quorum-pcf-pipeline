@@ -6,7 +6,7 @@ image_resource:
     repository: buildpack-deps
     tag: jessie-curl
 inputs:
-  - name: repo
+  - name: manifests
 params:
   CF_API: ~
   CF_USERNAME: ~
