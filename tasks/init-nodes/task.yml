@@ -7,6 +7,7 @@ image_resource:
     tag: jessie-curl
 inputs:
   - name: manifests
+  - name: pipelines
 params:
   CF_API: ~
   CF_USERNAME: ~
