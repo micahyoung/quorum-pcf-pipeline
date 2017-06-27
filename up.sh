@@ -13,15 +13,13 @@ true ${CONCOURSE_TEAM:?"!"}
 true ${CONCOURSE_USERNAME:?"!"}
 true ${CONCOURSE_PASSWORD:?"!"}
 true ${CONCOURSE_APP_PIPELINE:?"!"}
-true ${STATE_REPO_URL:?"!"}
-true ${STATE_REPO_PRIVATE_KEY:?"!"}
-true ${APP_REPO_URL:?"!"}
 true ${CF_API_URL:?"!"}
 true ${CF_USERNAME:?"!"}
 true ${CF_PASSWORD:?"!"}
 true ${CF_ORG:?"!"}
 true ${CF_SPACE:?"!"}
 true ${PIPELINE_REPO_URL:?"!"}
+true ${PIPELINE_REPO_PRIVATE_KEY:?"!"}
 true ${GITHUB_RELEASE_OWNER:?"!"}
 true ${GITHUB_RELEASE_REPO:?"!"}
 true ${GITHUB_RELEASE_TOKEN:?"!"}
@@ -34,32 +32,28 @@ if ! [ -f bin/fly ]; then
   chmod +x bin/fly
 fi
 
-if ! fly targets | grep $CONCOURSE_TARGET; then
-  fly login \
-    --target $CONCOURSE_TARGET \
-    --concourse-url "https://$DOMAIN" \
-    --team-name $CONCOURSE_TEAM \
-    --username $CONCOURSE_USERNAME \
-    --password $CONCOURSE_PASSWORD \
-  ;
-fi
-
-cat > state/quorum-pipeline-vars.yml <<EOF
-cf_api_url: $CF_API_URL
-cf_username: $CF_USERNAME
-cf_password: $CF_PASSWORD
-cf_org: $CF_ORG
-cf_space: $CF_SPACE
-pipeline_repo_url: $PIPELINE_REPO_URL
-github_release_owner: $GITHUB_RELEASE_OWNER
-github_release_repo: $GITHUB_RELEASE_REPO
-github_release_token: $GITHUB_RELEASE_TOKEN
-EOF
+fly login \
+  --target $CONCOURSE_TARGET \
+  --concourse-url "https://$DOMAIN" \
+  --team-name $CONCOURSE_TEAM \
+  --username $CONCOURSE_USERNAME \
+  --password $CONCOURSE_PASSWORD \
+;
 
 fly set-pipeline \
   --target $CONCOURSE_TARGET \
   --pipeline $CONCOURSE_APP_PIPELINE \
-  --load-vars-from state/quorum-pipeline-vars.yml \
+  -v cf_api_url="$CF_API_URL" \
+  -v cf_username="$CF_USERNAME" \
+  -v cf_password="$CF_PASSWORD" \
+  -v cf_org="$CF_ORG" \
+  -v cf_space="$CF_SPACE" \
+  -v pipeline_repo_url="$PIPELINE_REPO_URL" \
+  -v pipeline_repo_private_key="$PIPELINE_REPO_PRIVATE_KEY" \
+  -v quorum_pcf_repo_url="$QUORUM_PCF_REPO_URL" \
+  -v github_release_owner="$GITHUB_RELEASE_OWNER" \
+  -v github_release_repo="$GITHUB_RELEASE_REPO" \
+  -v github_release_token="$GITHUB_RELEASE_TOKEN" \
   --config quorum-pipeline/pipeline.yml \
   --non-interactive \
 ;

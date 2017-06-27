@@ -1,0 +1,11 @@
+#!/bin/bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
+mkdir -p deploy/bin
+cp -r artifacts/* deploy/bin/
+chmod +x deploy/bin/*
+
+cp -r run-scripts/run-scripts/* deploy/
+cp -r examples/examples/7nodes/* deploy/
