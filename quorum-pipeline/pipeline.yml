@@ -4,6 +4,23 @@ resources:
   source:
     branch: wip/external-repo
     uri: {{pipeline_repo_url}}
+    private_key: {{pipeline_repo_private_key}}
+- name: force-deploy-version
+  type: semver
+  source:
+    driver: git
+    uri: {{pipeline_repo_url}}
+    branch: version
+    file: DEPLOY_VERSION
+    private_key: {{pipeline_repo_private_key}}
+- name: quorum-bin-version
+  type: semver
+  source:
+    driver: git
+    uri: {{pipeline_repo_url}}
+    branch: version
+    file: QUORUM_BIN_VERSION
+    private_key: {{pipeline_repo_private_key}}
 - name: quorum-pcf-git
   type: git
   source:
@@ -48,21 +65,23 @@ jobs:
       trigger: true
     - get: constellation-git
     - get: quorum-pipeline-git
-  - aggregate:
-    - task: build-quorum
-      file: quorum-pipeline-git/tasks/build-quorum/task.yml
-    - task: build-constellation
-      file: quorum-pipeline-git/tasks/build-constellation/task.yml
-    - task: build-solidity
-      file: quorum-pipeline-git/tasks/build-solidity/task.yml
-      input_mapping:
-        pipelines: quorum-pipeline-git
-      output_mapping:
-        solidity-bin: build-solidity-output
+#  - aggregate:
+#    - task: build-quorum
+#      file: quorum-pipeline-git/tasks/build-quorum/task.yml
+#    - task: build-constellation
+#      file: quorum-pipeline-git/tasks/build-constellation/task.yml
+#    - task: build-solidity
+#      file: quorum-pipeline-git/tasks/build-solidity/task.yml
+#      input_mapping:
+#        pipelines: quorum-pipeline-git
+#      output_mapping:
+#        solidity-bin: build-solidity-output
+  - put: quorum-bin-version
+    params: {bump: patch}
   - put: quorum-bin-release
     params:
-      name: quorum-pipeline-git/versions/QUORUM_BIN_VERSION
-      tag: quorum-pipeline-git/versions/QUORUM_BIN_VERSION
+      name: quorum-bin-version/QUORUM_BIN_VERSION
+      tag: quorum-bin-version/QUORUM_BIN_VERSION
       globs:
         - build-quorum-output/*
         - build-constellation-output/*
@@ -77,6 +96,11 @@ jobs:
     input_mapping:
       pipelines: quorum-pipeline-git
     params:
+- name: force-deploy
+  build_logs_to_retain: 10
+  plan:
+  - put: force-deploy-version
+    params: {bump: patch}
 - name: deploy-bootnode
   build_logs_to_retain: 10
   plan:
@@ -86,6 +110,9 @@ jobs:
     - get: quorum-bin-release
       globs: ['*']
       passed: [quorum-build]
+      trigger: true
+    - get: force-deploy-version
+      passed: [force-deploy]
       trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
@@ -112,6 +139,9 @@ jobs:
       globs: ['*']
       passed: [quorum-build]
       trigger: true
+    - get: force-deploy-version
+      passed: [force-deploy]
+      trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
   - task: assemble-node
@@ -136,6 +166,9 @@ jobs:
     - get: quorum-bin-release
       globs: ['*']
       passed: [quorum-build]
+      trigger: true
+    - get: force-deploy-version
+      passed: [force-deploy]
       trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
@@ -162,6 +195,9 @@ jobs:
       globs: ['*']
       passed: [quorum-build]
       trigger: true
+    - get: force-deploy-version
+      passed: [force-deploy]
+      trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
   - task: assemble-node
@@ -186,6 +222,9 @@ jobs:
     - get: quorum-bin-release
       globs: ['*']
       passed: [quorum-build]
+      trigger: true
+    - get: force-deploy-version
+      passed: [force-deploy]
       trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
@@ -212,6 +251,9 @@ jobs:
       globs: ['*']
       passed: [quorum-build]
       trigger: true
+    - get: force-deploy-version
+      passed: [force-deploy]
+      trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
   - task: assemble-node
@@ -237,6 +279,9 @@ jobs:
       globs: ['*']
       passed: [quorum-build]
       trigger: true
+    - get: force-deploy-version
+      passed: [force-deploy]
+      trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
   - task: assemble-node
@@ -261,6 +306,9 @@ jobs:
     - get: quorum-bin-release
       globs: ['*']
       passed: [quorum-build]
+      trigger: true
+    - get: force-deploy-version
+      passed: [force-deploy]
       trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
@@ -292,6 +340,9 @@ jobs:
       - deploy-node-5
       - deploy-node-6
       - deploy-node-7
+    - get: force-deploy-version
+      passed: [force-deploy]
+      trigger: true
     - get: quorum-pipeline-git
   - task: test-nodes
     file: quorum-pipeline-git/tasks/test-nodes/task.yml
