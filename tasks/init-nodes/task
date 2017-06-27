@@ -34,14 +34,14 @@ cf delete-service -f ip-service
 
 cf create-user-provided-service ip-service -p '{}'
 
-cf push bootnode -f pipelines/manifests/bootnode-manifest.yml --no-start
-cf push node-1   -f pipelines/manifests/node1-manifest.yml --no-start
-cf push node-2   -f pipelines/manifests/node2-manifest.yml --no-start
-cf push node-3   -f pipelines/manifests/node3-manifest.yml --no-start
-cf push node-4   -f pipelines/manifests/node4-manifest.yml --no-start
-cf push node-5   -f pipelines/manifests/node5-manifest.yml --no-start
-cf push node-6   -f pipelines/manifests/node6-manifest.yml --no-start
-cf push node-7   -f pipelines/manifests/node7-manifest.yml --no-start
+cf push bootnode -f repo/manifests/bootnode-manifest.yml --no-start
+cf push node-1   -f repo/manifests/node1-manifest.yml --no-start
+cf push node-2   -f repo/manifests/node2-manifest.yml --no-start
+cf push node-3   -f repo/manifests/node3-manifest.yml --no-start
+cf push node-4   -f repo/manifests/node4-manifest.yml --no-start
+cf push node-5   -f repo/manifests/node5-manifest.yml --no-start
+cf push node-6   -f repo/manifests/node6-manifest.yml --no-start
+cf push node-7   -f repo/manifests/node7-manifest.yml --no-start
 
 cf allow-access node-2   node-1   --protocol tcp --port 9000
 cf allow-access node-3   node-1   --protocol tcp --port 9000
