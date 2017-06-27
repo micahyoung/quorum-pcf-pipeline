@@ -49,6 +49,7 @@ cf_password: $CF_PASSWORD
 cf_org: $CF_ORG
 cf_space: $CF_SPACE
 pipeline_repo_url: $PIPELINE_REPO_URL
+quorum_pcf_repo_url: $QUORUM_PCF_REPO_URL
 github_release_owner: $GITHUB_RELEASE_OWNER
 github_release_repo: $GITHUB_RELEASE_REPO
 github_release_token: $GITHUB_RELEASE_TOKEN

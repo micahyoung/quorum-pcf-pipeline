@@ -4,11 +4,11 @@ resources:
   source:
     branch: wip/external-repo
     uri: {{pipeline_repo_url}}
-- name: quorum-pcf-7nodes
+- name: quorum-pcf-git
   type: git
   source:
     branch: wip
-    uri: https://github.com/micahyoung/quorum-pcf-7nodes.git
+    uri: {{quorum_pcf_repo_url}}
 - name: quorum-git
   type: git
   source:
@@ -81,7 +81,7 @@ jobs:
   build_logs_to_retain: 10
   plan:
   - aggregate:
-    - get: quorum-pcf-7nodes
+    - get: quorum-pcf-git
       trigger: true
     - get: quorum-bin-release
       globs: ['*']
@@ -94,22 +94,204 @@ jobs:
     input_mapping:
       artifacts: quorum-bin-release
       examples: quorum-examples-git
-      run-scripts: quorum-pcf-7nodes
+      run-scripts: quorum-pcf-git
       pipelines: quorum-pipeline-git
     output_mapping:
       deploy: deploy
   - put: cf-push
-    manifest: quorum-pipeline-git/manifests/bootnode-manifest.yml
-    path: deploy/
-    current_app_name: bootnode
-- name: test-node1
+    params:
+      manifest: quorum-pcf-git/manifests/bootnode-manifest.yml
+      path: deploy/
+- name: deploy-node-1
   build_logs_to_retain: 10
   plan:
   - aggregate:
-    - get: quorum-pcf-7nodes
+    - get: quorum-pcf-git
+      trigger: true
+    - get: quorum-bin-release
+      globs: ['*']
+      passed: [quorum-build]
+      trigger: true
+    - get: quorum-examples-git
+    - get: quorum-pipeline-git
+  - task: assemble-node
+    file: quorum-pipeline-git/tasks/assemble-node/task.yml
+    input_mapping:
+      artifacts: quorum-bin-release
+      examples: quorum-examples-git
+      run-scripts: quorum-pcf-git
+      pipelines: quorum-pipeline-git
+    output_mapping:
+      deploy: deploy
+  - put: cf-push
+    params:
+      manifest: quorum-pcf-git/manifests/node-1-manifest.yml
+      path: deploy/
+- name: deploy-node-2
+  build_logs_to_retain: 10
+  plan:
+  - aggregate:
+    - get: quorum-pcf-git
+      trigger: true
+    - get: quorum-bin-release
+      globs: ['*']
+      passed: [quorum-build]
+      trigger: true
+    - get: quorum-examples-git
+    - get: quorum-pipeline-git
+  - task: assemble-node
+    file: quorum-pipeline-git/tasks/assemble-node/task.yml
+    input_mapping:
+      artifacts: quorum-bin-release
+      examples: quorum-examples-git
+      run-scripts: quorum-pcf-git
+      pipelines: quorum-pipeline-git
+    output_mapping:
+      deploy: deploy
+  - put: cf-push
+    params:
+      manifest: quorum-pcf-git/manifests/node-2-manifest.yml
+      path: deploy/
+- name: deploy-node-3
+  build_logs_to_retain: 10
+  plan:
+  - aggregate:
+    - get: quorum-pcf-git
+      trigger: true
+    - get: quorum-bin-release
+      globs: ['*']
+      passed: [quorum-build]
+      trigger: true
+    - get: quorum-examples-git
+    - get: quorum-pipeline-git
+  - task: assemble-node
+    file: quorum-pipeline-git/tasks/assemble-node/task.yml
+    input_mapping:
+      artifacts: quorum-bin-release
+      examples: quorum-examples-git
+      run-scripts: quorum-pcf-git
+      pipelines: quorum-pipeline-git
+    output_mapping:
+      deploy: deploy
+  - put: cf-push
+    params:
+      manifest: quorum-pcf-git/manifests/node-3-manifest.yml
+      path: deploy/
+- name: deploy-node-4
+  build_logs_to_retain: 10
+  plan:
+  - aggregate:
+    - get: quorum-pcf-git
+      trigger: true
+    - get: quorum-bin-release
+      globs: ['*']
+      passed: [quorum-build]
+      trigger: true
+    - get: quorum-examples-git
+    - get: quorum-pipeline-git
+  - task: assemble-node
+    file: quorum-pipeline-git/tasks/assemble-node/task.yml
+    input_mapping:
+      artifacts: quorum-bin-release
+      examples: quorum-examples-git
+      run-scripts: quorum-pcf-git
+      pipelines: quorum-pipeline-git
+    output_mapping:
+      deploy: deploy
+  - put: cf-push
+    params:
+      manifest: quorum-pcf-git/manifests/node-4-manifest.yml
+      path: deploy/
+- name: deploy-node-5
+  build_logs_to_retain: 10
+  plan:
+  - aggregate:
+    - get: quorum-pcf-git
+      trigger: true
+    - get: quorum-bin-release
+      globs: ['*']
+      passed: [quorum-build]
+      trigger: true
+    - get: quorum-examples-git
+    - get: quorum-pipeline-git
+  - task: assemble-node
+    file: quorum-pipeline-git/tasks/assemble-node/task.yml
+    input_mapping:
+      artifacts: quorum-bin-release
+      examples: quorum-examples-git
+      run-scripts: quorum-pcf-git
+      pipelines: quorum-pipeline-git
+    output_mapping:
+      deploy: deploy
+  - put: cf-push
+    params:
+      manifest: quorum-pcf-git/manifests/node-5-manifest.yml
+      path: deploy/
+- name: deploy-node-6
+  build_logs_to_retain: 10
+  plan:
+  - aggregate:
+    - get: quorum-pcf-git
+      trigger: true
+    - get: quorum-bin-release
+      globs: ['*']
+      passed: [quorum-build]
+      trigger: true
+    - get: quorum-examples-git
+    - get: quorum-pipeline-git
+  - task: assemble-node
+    file: quorum-pipeline-git/tasks/assemble-node/task.yml
+    input_mapping:
+      artifacts: quorum-bin-release
+      examples: quorum-examples-git
+      run-scripts: quorum-pcf-git
+      pipelines: quorum-pipeline-git
+    output_mapping:
+      deploy: deploy
+  - put: cf-push
+    params:
+      manifest: quorum-pcf-git/manifests/node-6-manifest.yml
+      path: deploy/
+- name: deploy-node-7
+  build_logs_to_retain: 10
+  plan:
+  - aggregate:
+    - get: quorum-pcf-git
+      trigger: true
+    - get: quorum-bin-release
+      globs: ['*']
+      passed: [quorum-build]
+      trigger: true
+    - get: quorum-examples-git
+    - get: quorum-pipeline-git
+  - task: assemble-node
+    file: quorum-pipeline-git/tasks/assemble-node/task.yml
+    input_mapping:
+      artifacts: quorum-bin-release
+      examples: quorum-examples-git
+      run-scripts: quorum-pcf-git
+      pipelines: quorum-pipeline-git
+    output_mapping:
+      deploy: deploy
+  - put: cf-push
+    params:
+      manifest: quorum-pcf-git/manifests/node-7-manifest.yml
+      path: deploy/
+- name: test-node-1
+  build_logs_to_retain: 10
+  plan:
+  - aggregate:
+    - get: quorum-pcf-git
       trigger: true
       passed:
       - deploy-bootnode
+      - deploy-node-1
+      - deploy-node-2
+      - deploy-node-3
+      - deploy-node-4
+      - deploy-node-5
+      - deploy-node-6
+      - deploy-node-7
     - get: quorum-pipeline-git
   - task: test-nodes
     file: quorum-pipeline-git/tasks/test-nodes/task.yml

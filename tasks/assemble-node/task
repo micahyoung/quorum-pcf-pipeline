@@ -4,6 +4,6 @@ set -o nounset
 set -o pipefail
 
 mkdir -p deploy/bin
-cp -r artifacts/ deploy/bin/
-cp -r run-scripts/run-scripts/ deploy/
-cp -r examples/ deploy/
+cp -r artifacts/* deploy/bin/
+cp -r run-scripts/run-scripts/* deploy/
+cp -r examples/* deploy/
