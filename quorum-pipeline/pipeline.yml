@@ -343,8 +343,16 @@ jobs:
       - deploy-node-6
       - deploy-node-7
     - get: force-deploy-version
-      passed: [force-deploy]
       trigger: true
+      passed:
+      - deploy-bootnode
+      - deploy-node-1
+      - deploy-node-2
+      - deploy-node-3
+      - deploy-node-4
+      - deploy-node-5
+      - deploy-node-6
+      - deploy-node-7
     - get: quorum-pipeline-git
   - task: test-nodes
     file: quorum-pipeline-git/tasks/test-nodes/task.yml
