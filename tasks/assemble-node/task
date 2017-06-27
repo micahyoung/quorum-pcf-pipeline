@@ -1,0 +1,9 @@
+#!/bin/bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
+mkdir -p deploy/bin
+cp -r artifacts/ deploy/bin/
+cp -r run-scripts/run-scripts/ deploy/
+cp -r configs/ deploy/

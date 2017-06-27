@@ -15,7 +15,7 @@ dpkg -i cfcli.deb
 
 cf login -a "$CF_API" -u "$CF_USERNAME" -p "$CF_PASSWORD" -o "$CF_ORGANIZATION" -s "$CF_SPACE"
 
-TEST_COMMAND='cd app; export PATH=$PATH:`pwd`/bin; geth --exec "for (i=0; i<10; i++) {loadScript(\"script1.js\")}; var lastTxHash = eth.pendingTransactions[eth.pendingTransactions.length-1].hash; while(eth.pendingTransactions.length > 0) { admin.sleep(1) }; eth.getTransactionReceipt(lastTxHash)" attach qdata/dd1/geth.ipc'
+TEST_COMMAND='export PATH=$PATH:`pwd`; export LD_LIBRARY_PATH=`pwd`; cd app; export PATH=$PATH:`pwd`/bin; geth --exec "for (i=0; i<10; i++) {loadScript(\"script1.js\")}; var lastTxHash = eth.pendingTransactions[eth.pendingTransactions.length-1].hash; while(eth.pendingTransactions.length > 0) { admin.sleep(1) }; eth.getTransactionReceipt(lastTxHash)" attach qdata/dd1/geth.ipc'
 TEST_OUTPUT=`cf ssh $NODE_NAME -c "$TEST_COMMAND"`
 
 echo "$TEST_OUTPUT"

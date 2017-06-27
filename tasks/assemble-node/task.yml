@@ -6,15 +6,19 @@ image_resource:
     repository: buildpack-deps
     tag: jessie-curl
 inputs:
-  - name: pipelines
+- name: artifacts
+- name: examples
+- name: run-scripts
+- name: pipelines
+outputs:
+- name: deploy
 params:
-  SERVICE_NAME: ~
-  BOOTNODE_APPNAME: ~
-  OTHER_NODE_APPNAME: ~
+  NODE_NAME: ~
+  MANIFEST_NAME: ~
   CF_API: ~
   CF_USERNAME: ~
   CF_PASSWORD: ~
   CF_ORGANIZATION: ~
   CF_SPACE: ~
 run:
-  path: pipelines/tasks/update-ip-service/task
+  path: pipelines/tasks/assemble-node/task
