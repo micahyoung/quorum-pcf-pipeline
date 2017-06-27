@@ -34,15 +34,13 @@ if ! [ -f bin/fly ]; then
   chmod +x bin/fly
 fi
 
-if ! fly targets | grep $CONCOURSE_TARGET; then
-  fly login \
-    --target $CONCOURSE_TARGET \
-    --concourse-url "https://$DOMAIN" \
-    --team-name $CONCOURSE_TEAM \
-    --username $CONCOURSE_USERNAME \
-    --password $CONCOURSE_PASSWORD \
-  ;
-fi
+fly login \
+  --target $CONCOURSE_TARGET \
+  --concourse-url "https://$DOMAIN" \
+  --team-name $CONCOURSE_TEAM \
+  --username $CONCOURSE_USERNAME \
+  --password $CONCOURSE_PASSWORD \
+;
 
 cat > state/quorum-pipeline-vars.yml <<EOF
 cf_api_url: $CF_API_URL
