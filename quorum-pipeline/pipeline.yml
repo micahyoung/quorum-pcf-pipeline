@@ -65,27 +65,29 @@ jobs:
       trigger: true
     - get: constellation-git
     - get: quorum-pipeline-git
-#  - aggregate:
-#    - task: build-quorum
-#      file: quorum-pipeline-git/tasks/build-quorum/task.yml
-#    - task: build-constellation
-#      file: quorum-pipeline-git/tasks/build-constellation/task.yml
-#    - task: build-solidity
-#      file: quorum-pipeline-git/tasks/build-solidity/task.yml
-#      input_mapping:
-#        pipelines: quorum-pipeline-git
-#      output_mapping:
-#        solidity-bin: build-solidity-output
-  - put: quorum-bin-version
+  - aggregate:
+    - task: build-quorum
+      file: quorum-pipeline-git/tasks/build-quorum/task.yml
+    - task: build-constellation
+      file: quorum-pipeline-git/tasks/build-constellation/task.yml
+    - task: build-solidity
+      file: quorum-pipeline-git/tasks/build-solidity/task.yml
+      input_mapping:
+        pipelines: quorum-pipeline-git
+      output_mapping:
+        solidity-bin: build-solidity-output
+  - get: quorum-bin-version
     params: {bump: patch}
   - put: quorum-bin-release
     params:
-      name: quorum-bin-version/QUORUM_BIN_VERSION
-      tag: quorum-bin-version/QUORUM_BIN_VERSION
+      name: quorum-bin-version/version
+      tag: quorum-bin-version/version
       globs:
-        - build-quorum-output/*
-        - build-constellation-output/*
-        - build-solidity-output/*
+         - build-quorum-output/*
+         - build-constellation-output/*
+         - build-solidity-output/*
+  - put: quorum-bin-version
+    params: {bump: patch}
 - name: init-nodes
   build_logs_to_retain: 10
   plan:
