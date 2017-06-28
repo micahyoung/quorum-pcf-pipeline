@@ -2,7 +2,7 @@ resources:
 - name: quorum-pipeline-git
   type: git
   source:
-    branch: wip/external-repo
+    branch: master
     uri: {{pipeline_repo_url}}
     private_key: {{pipeline_repo_private_key}}
 - name: force-deploy-version
@@ -24,7 +24,7 @@ resources:
 - name: quorum-pcf-git
   type: git
   source:
-    branch: wip
+    branch: master
     uri: {{quorum_pcf_repo_url}}
 - name: quorum-git
   type: git
