@@ -7,7 +7,7 @@ true ${CONSTELLATION_SRC_DIR:?"!"}
 true ${OUTPUT_DIR:?"!"}
 
 apt-get update
-apt-get install libdb-dev libsodium-dev zlib1g-dev libtinfo-dev
+apt-get install libdb-dev libsodium-dev zlib1g-dev libtinfo-dev libleveldb-dev
 
 pushd $CONSTELLATION_SRC_DIR
   stack install --allow-different-user
