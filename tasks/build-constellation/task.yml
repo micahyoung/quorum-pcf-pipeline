@@ -3,8 +3,8 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: mitchty
-    tag: alpine-ghc
+    repository: mitchty/alpine-ghc
+    tag: latest
 inputs:
   - name: constellation-git
   - name: quorum-pipeline-git
