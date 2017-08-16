@@ -28,12 +28,6 @@ cf delete -f node-5
 cf delete -f node-6
 cf delete -f node-7
 
-cf delete-service -f ip-service
-
-####
-
-cf create-user-provided-service ip-service -p '{}'
-
 cf push bootnode -f manifests/manifests/bootnode-manifest.yml --no-start
 cf push node-1   -f manifests/manifests/node-1-manifest.yml --no-start
 cf push node-2   -f manifests/manifests/node-2-manifest.yml --no-start
@@ -42,6 +36,23 @@ cf push node-4   -f manifests/manifests/node-4-manifest.yml --no-start
 cf push node-5   -f manifests/manifests/node-5-manifest.yml --no-start
 cf push node-6   -f manifests/manifests/node-6-manifest.yml --no-start
 cf push node-7   -f manifests/manifests/node-7-manifest.yml --no-start
+
+BOOTNODE_IP_ROUTE=$(cf app bootnode | grep routes: | awk '{print $2}')
+OTHER_NODE_IP_ROUTE=$(cf app node-1 | grep routes: | awk '{print $2}')
+cf set-env node-1  BOOTNODE_IP_ROUTE $BOOTNODE_IP_ROUTE
+cf set-env node-2  BOOTNODE_IP_ROUTE $BOOTNODE_IP_ROUTE
+cf set-env node-3  BOOTNODE_IP_ROUTE $BOOTNODE_IP_ROUTE
+cf set-env node-4  BOOTNODE_IP_ROUTE $BOOTNODE_IP_ROUTE
+cf set-env node-5  BOOTNODE_IP_ROUTE $BOOTNODE_IP_ROUTE
+cf set-env node-6  BOOTNODE_IP_ROUTE $BOOTNODE_IP_ROUTE
+cf set-env node-7  OTHER_NODE_IP_ROUTE $OTHER_NODE_IP_ROUTE
+cf set-env node-1  OTHER_NODE_IP_ROUTE $OTHER_NODE_IP_ROUTE
+cf set-env node-2  OTHER_NODE_IP_ROUTE $OTHER_NODE_IP_ROUTE
+cf set-env node-3  OTHER_NODE_IP_ROUTE $OTHER_NODE_IP_ROUTE
+cf set-env node-4  OTHER_NODE_IP_ROUTE $OTHER_NODE_IP_ROUTE
+cf set-env node-5  OTHER_NODE_IP_ROUTE $OTHER_NODE_IP_ROUTE
+cf set-env node-6  OTHER_NODE_IP_ROUTE $OTHER_NODE_IP_ROUTE
+cf set-env node-7  OTHER_NODE_IP_ROUTE $OTHER_NODE_IP_ROUTE
 
 cf allow-access node-2   node-1   --protocol tcp --port 9000
 cf allow-access node-3   node-1   --protocol tcp --port 9000
