@@ -14,7 +14,7 @@ pushd $CONSTELLATION_SRC_DIR
 popd
 
 pushd /root/.local/bin/
-  ldd constellation-node | grep 'libsodium' | awk '{print $3}' | xargs cp -t .
+  ldd constellation-node | grep -e 'libsodium|libleveldb' | awk '{print $3}' | xargs cp -t .
 popd
 
 cp /root/.local/bin/* \
