@@ -6,15 +6,22 @@ set -o pipefail
 true ${CONSTELLATION_SRC_DIR:?"!"}
 true ${OUTPUT_DIR:?"!"}
 
-apt-get update
-apt-get -y install libdb-dev libleveldb-dev libsodium-dev zlib1g-dev libtinfo-dev
+# for leveldb
+echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
+
+apk update
+apk upgrade
+apk add musl-dev gmp-dev zlib-dev pcre-dev llvm clang \
+        leveldb-dev \
+        alpine-sdk git ca-certificates gmp-dev zlib-dev libsodium-dev db-dev ncurses-dev ncurses-static \
+;
 
 pushd $CONSTELLATION_SRC_DIR
-  stack install --allow-different-user
-popd
-
-pushd /root/.local/bin/
-  ldd constellation-node | grep -e 'libsodium|libleveldb' | awk '{print $3}' | xargs cp -t .
+  stack install \
+    --system-ghc \
+    --split-objs \
+    --ghc-options="-fPIC -fllvm" \
+  ;
 popd
 
 cp /root/.local/bin/* \
