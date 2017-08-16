@@ -3,26 +3,8 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-true ${CONSTELLATION_SRC_DIR:?"!"}
 true ${OUTPUT_DIR:?"!"}
 
-# for leveldb
-echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
-
-apk update
-apk upgrade
-apk add musl-dev gmp-dev zlib-dev pcre-dev llvm clang \
-        leveldb-dev linux-headers \
-        alpine-sdk git ca-certificates gmp-dev zlib-dev libsodium-dev db-dev ncurses-dev ncurses-static \
-;
-
-pushd $CONSTELLATION_SRC_DIR
-  stack install \
-    --system-ghc \
-    --split-objs \
-    --ghc-options="-fPIC -fllvm" \
-  ;
-popd
-
-cp /root/.local/bin/* \
-  $OUTPUT_DIR/
+curl -L https://github.com/jpmorganchase/constellation/releases/download/v0.1.0/constellation-0.1.0-ubuntu1604.tar.xz \
+  | tar xO constellation-0.1.0-ubuntu1604/constellation-node \
+  > $OUTPUT_DIR/constellation-node
