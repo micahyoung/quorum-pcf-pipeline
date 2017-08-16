@@ -5,6 +5,9 @@ set -o pipefail
 
 true ${OUTPUT_DIR:?"!"}
 
+apt-get update
+apt-get install -y xz-utils
+
 curl -L https://github.com/jpmorganchase/constellation/releases/download/v0.1.0/constellation-0.1.0-ubuntu1604.tar.xz \
-  | tar xO constellation-0.1.0-ubuntu1604/constellation-node \
+  | tar xJO constellation-0.1.0-ubuntu1604/constellation-node \
   > $OUTPUT_DIR/constellation-node
