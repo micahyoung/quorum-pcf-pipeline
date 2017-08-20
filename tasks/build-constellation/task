@@ -6,8 +6,11 @@ set -o pipefail
 true ${OUTPUT_DIR:?"!"}
 
 apt-get update
-apt-get install -y xz-utils
+apt-get install -y xz-utils libsodium18
 
 curl -L https://github.com/jpmorganchase/constellation/releases/download/v0.1.0/constellation-0.1.0-ubuntu1604.tar.xz \
   | tar xJO constellation-0.1.0-ubuntu1604/constellation-node \
   > $OUTPUT_DIR/constellation-node
+  
+cp /usr/lib/x86_64-linux-gnu/libsodium.so.18 \
+    $OUTPUT_DIR/libsodium.so.18
