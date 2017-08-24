@@ -102,9 +102,12 @@ jobs:
 - name: trigger-deploy
   build_logs_to_retain: 10
   plan:
+  - get: quorum-pcf-git
+    trigger: true
   - get: quorum-bin-release
     globs: ['*']
-    passed: [quorum-build]
+    passed:
+    - quorum-build
     trigger: true
   - put: deploy
     params: {bump: patch}
@@ -112,12 +115,13 @@ jobs:
   build_logs_to_retain: 10
   plan:
   - aggregate:
+    - get: deploy
+      passed:
+      - trigger-deploy
+      trigger: true
     - get: quorum-pcf-git
     - get: quorum-bin-release
       globs: ['*']
-    - get: deploy
-      passed: [trigger-deploy]
-      trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
   - task: assemble-node
@@ -137,13 +141,13 @@ jobs:
   build_logs_to_retain: 10
   plan:
   - aggregate:
-    - get: quorum-pcf-git
-    - get: quorum-bin-release
-      globs: ['*']
     - get: deploy
       passed:
       - deploy-bootnode
       trigger: true
+    - get: quorum-pcf-git
+    - get: quorum-bin-release
+      globs: ['*']
     - get: quorum-examples-git
     - get: quorum-pipeline-git
   - task: assemble-node
@@ -163,13 +167,12 @@ jobs:
   build_logs_to_retain: 10
   plan:
   - aggregate:
-    - get: quorum-pcf-git
-    - get: quorum-bin-release
-      globs: ['*']
-      trigger: true
     - get: deploy
       passed:
       - deploy-node-1
+    - get: quorum-pcf-git
+    - get: quorum-bin-release
+      globs: ['*']
       trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
@@ -190,13 +193,13 @@ jobs:
   build_logs_to_retain: 10
   plan:
   - aggregate:
-    - get: quorum-pcf-git
-    - get: quorum-bin-release
-      globs: ['*']
     - get: deploy
       passed:
       - deploy-node-1
       trigger: true
+    - get: quorum-pcf-git
+    - get: quorum-bin-release
+      globs: ['*']
     - get: quorum-examples-git
     - get: quorum-pipeline-git
   - task: assemble-node
@@ -216,14 +219,13 @@ jobs:
   build_logs_to_retain: 10
   plan:
   - aggregate:
-    - get: quorum-pcf-git
-      trigger: true
-    - get: quorum-bin-release
-      globs: ['*']
     - get: deploy
       passed:
       - deploy-node-1
       trigger: true
+    - get: quorum-pcf-git
+    - get: quorum-bin-release
+      globs: ['*']
     - get: quorum-examples-git
     - get: quorum-pipeline-git
   - task: assemble-node
@@ -243,14 +245,13 @@ jobs:
   build_logs_to_retain: 10
   plan:
   - aggregate:
-    - get: quorum-pcf-git
-      trigger: true
-    - get: quorum-bin-release
-      globs: ['*']
     - get: deploy
       passed:
       - deploy-node-1
       trigger: true
+    - get: quorum-pcf-git
+    - get: quorum-bin-release
+      globs: ['*']
     - get: quorum-examples-git
     - get: quorum-pipeline-git
   - task: assemble-node
@@ -270,13 +271,12 @@ jobs:
   build_logs_to_retain: 10
   plan:
   - aggregate:
-    - get: quorum-pcf-git
-      trigger: true
-    - get: quorum-bin-release
-      globs: ['*']
     - get: deploy
       passed:
       - deploy-node-1
+    - get: quorum-pcf-git
+    - get: quorum-bin-release
+      globs: ['*']
       trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
@@ -297,13 +297,12 @@ jobs:
   build_logs_to_retain: 10
   plan:
   - aggregate:
-    - get: quorum-pcf-git
-      trigger: true
-    - get: quorum-bin-release
-      globs: ['*']
     - get: deploy
       passed:
       - deploy-node-1
+    - get: quorum-pcf-git
+    - get: quorum-bin-release
+      globs: ['*']
       trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
