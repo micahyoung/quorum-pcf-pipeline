@@ -3,8 +3,8 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: governmentpaas
-    tag: cf-cli
+    repository: governmentpaas/cf-cli
+    tag: latest
 inputs:
   - name: pipelines
 params:
