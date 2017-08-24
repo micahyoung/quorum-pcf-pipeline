@@ -9,9 +9,6 @@ true ${CF_PASSWORD:?"!"}
 true ${CF_ORGANIZATION:?"!"}
 true ${CF_SPACE:?"!"}
 
-curl -L "https://cli.run.pivotal.io/stable?release=debian64&version=6.26.0&source=github-rel" > cfcli.deb
-dpkg -i cfcli.deb
-
 cf login -a "$CF_API" -u "$CF_USERNAME" -p "$CF_PASSWORD" -o "$CF_ORGANIZATION" -s "$CF_SPACE"
 
 for i in {1..7}; do 
