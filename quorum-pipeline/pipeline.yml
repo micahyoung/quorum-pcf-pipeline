@@ -170,10 +170,10 @@ jobs:
     - get: deploy
       passed:
       - deploy-node-1
+      trigger: true
     - get: quorum-pcf-git
     - get: quorum-bin-release
       globs: ['*']
-      trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
   - task: assemble-node
@@ -274,10 +274,10 @@ jobs:
     - get: deploy
       passed:
       - deploy-node-1
+      trigger: true
     - get: quorum-pcf-git
     - get: quorum-bin-release
       globs: ['*']
-      trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
   - task: assemble-node
@@ -300,10 +300,10 @@ jobs:
     - get: deploy
       passed:
       - deploy-node-1
+      trigger: true
     - get: quorum-pcf-git
     - get: quorum-bin-release
       globs: ['*']
-      trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
   - task: assemble-node
