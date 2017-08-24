@@ -5,7 +5,7 @@ resources:
     branch: master
     uri: {{pipeline_repo_url}}
     private_key: {{pipeline_repo_private_key}}
-- name: force-deploy-version
+- name: deploy
   type: semver
   source:
     driver: git
@@ -99,23 +99,24 @@ jobs:
       CF_PASSWORD: {{cf_password}}
       CF_ORGANIZATION: {{cf_org}}
       CF_SPACE: {{cf_space}}
-- name: force-deploy
+- name: trigger-deploy
   build_logs_to_retain: 10
   plan:
-  - put: force-deploy-version
+  - get: quorum-bin-release
+    globs: ['*']
+    passed: [quorum-build]
+    trigger: true
+  - put: deploy
     params: {bump: patch}
 - name: deploy-bootnode
   build_logs_to_retain: 10
   plan:
   - aggregate:
     - get: quorum-pcf-git
-      trigger: true
     - get: quorum-bin-release
       globs: ['*']
-      passed: [quorum-build]
-      trigger: true
-    - get: force-deploy-version
-      passed: [force-deploy]
+    - get: deploy
+      passed: [trigger-deploy]
       trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
@@ -137,13 +138,11 @@ jobs:
   plan:
   - aggregate:
     - get: quorum-pcf-git
-      trigger: true
     - get: quorum-bin-release
       globs: ['*']
-      passed: [quorum-build]
-      trigger: true
-    - get: force-deploy-version
-      passed: [force-deploy]
+    - get: deploy
+      passed:
+      - deploy-bootnode
       trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
@@ -165,13 +164,12 @@ jobs:
   plan:
   - aggregate:
     - get: quorum-pcf-git
-      trigger: true
     - get: quorum-bin-release
       globs: ['*']
-      passed: [quorum-build]
       trigger: true
-    - get: force-deploy-version
-      passed: [force-deploy]
+    - get: deploy
+      passed:
+      - deploy-node-1
       trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
@@ -193,13 +191,11 @@ jobs:
   plan:
   - aggregate:
     - get: quorum-pcf-git
-      trigger: true
     - get: quorum-bin-release
       globs: ['*']
-      passed: [quorum-build]
-      trigger: true
-    - get: force-deploy-version
-      passed: [force-deploy]
+    - get: deploy
+      passed:
+      - deploy-node-1
       trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
@@ -224,10 +220,9 @@ jobs:
       trigger: true
     - get: quorum-bin-release
       globs: ['*']
-      passed: [quorum-build]
-      trigger: true
-    - get: force-deploy-version
-      passed: [force-deploy]
+    - get: deploy
+      passed:
+      - deploy-node-1
       trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
@@ -252,10 +247,9 @@ jobs:
       trigger: true
     - get: quorum-bin-release
       globs: ['*']
-      passed: [quorum-build]
-      trigger: true
-    - get: force-deploy-version
-      passed: [force-deploy]
+    - get: deploy
+      passed:
+      - deploy-node-1
       trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
@@ -280,10 +274,9 @@ jobs:
       trigger: true
     - get: quorum-bin-release
       globs: ['*']
-      passed: [quorum-build]
-      trigger: true
-    - get: force-deploy-version
-      passed: [force-deploy]
+    - get: deploy
+      passed:
+      - deploy-node-1
       trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
@@ -308,10 +301,9 @@ jobs:
       trigger: true
     - get: quorum-bin-release
       globs: ['*']
-      passed: [quorum-build]
-      trigger: true
-    - get: force-deploy-version
-      passed: [force-deploy]
+    - get: deploy
+      passed:
+      - deploy-node-1
       trigger: true
     - get: quorum-examples-git
     - get: quorum-pipeline-git
@@ -333,17 +325,7 @@ jobs:
   plan:
   - aggregate:
     - get: quorum-pcf-git
-      trigger: true
-      passed:
-      - deploy-bootnode
-      - deploy-node-1
-      - deploy-node-2
-      - deploy-node-3
-      - deploy-node-4
-      - deploy-node-5
-      - deploy-node-6
-      - deploy-node-7
-    - get: force-deploy-version
+    - get: deploy
       trigger: true
       passed:
       - deploy-bootnode
