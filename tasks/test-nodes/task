@@ -19,7 +19,7 @@ for i in {1..7}; do
   BLOCK_OUTPUT=`cf ssh node-$i -c "app/bin/geth --exec 'eth.blockNumber > 0' attach app/qdata/dd$i/geth.ipc"`
 
   if ! [[ $BLOCK_OUTPUT == *"true"* ]]; then
-    echo "!!!!! Failure: !!!!!"
+    echo "!!!!! Failure: node-$i !!!!!"
     echo $BLOCK_OUTPUT
     exit 1
   fi
