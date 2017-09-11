@@ -5,6 +5,10 @@ set -o pipefail
 
 true ${OUTPUT_DIR:?"!"}
 
+if ! grep jessie-backports /etc/apt/sources.list; then
+  echo "deb http://deb.debian.org/debian jessie-backports main" >> /etc/apt/sources.list
+fi
+
 apt-get update
 apt-get install -y xz-utils libsodium18
 
