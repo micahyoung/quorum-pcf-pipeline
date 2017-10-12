@@ -9,9 +9,6 @@ true ${CF_PASSWORD:?"!"}
 true ${CF_ORGANIZATION:?"!"}
 true ${CF_SPACE:?"!"}
 
-apt update
-apt install -y git
-
 curl -L "https://cli.run.pivotal.io/stable?release=debian64&version=6.26.0&source=github-rel" > cfcli.deb
 dpkg -i cfcli.deb
 
