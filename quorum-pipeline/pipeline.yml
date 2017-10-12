@@ -92,7 +92,7 @@ jobs:
     file: quorum-pipeline-git/tasks/init-nodes/task.yml
     input_mapping:
       pipelines: quorum-pipeline-git
-      manifests: quorum-pcf-git
+      quorum-pcf: quorum-pcf-git
     params:
       CF_API: {{cf_api_url}}
       CF_USERNAME: {{cf_username}}

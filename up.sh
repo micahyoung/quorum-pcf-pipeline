@@ -12,7 +12,7 @@ source state/env.sh
 true ${CONCOURSE_TEAM:?"!"}
 true ${CONCOURSE_USERNAME:?"!"}
 true ${CONCOURSE_PASSWORD:?"!"}
-true ${CONCOURSE_APP_PIPELINE:?"!"}
+true ${CONCOURSE_DEV_PIPELINE:?"!"}
 true ${CF_API_URL:?"!"}
 true ${CF_USERNAME:?"!"}
 true ${CF_PASSWORD:?"!"}
@@ -42,7 +42,7 @@ fly login \
 
 fly set-pipeline \
   --target $CONCOURSE_TARGET \
-  --pipeline $CONCOURSE_APP_PIPELINE \
+  --pipeline $CONCOURSE_DEV_PIPELINE \
   -v cf_api_url="$CF_API_URL" \
   -v cf_username="$CF_USERNAME" \
   -v cf_password="$CF_PASSWORD" \
