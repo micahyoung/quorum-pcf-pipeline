@@ -20,7 +20,7 @@ cf install-plugin \
 cf login -a "$CF_API" -u "$CF_USERNAME" -p "$CF_PASSWORD" -o "$CF_ORGANIZATION" -s "$CF_SPACE"
 
 pushd quorum-pcf
-  ./down.sh
+  echo y | ./down.sh
 
   ./up.sh
 popd
